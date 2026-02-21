@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSeeder::class);
         $this->call(RoleSeeder::class);
 
-        $user = new User();
+        $user = new User;
         $user->name = 'Admin';
         $user->email = 'admin@admin.com';
         $user->password = 'password';

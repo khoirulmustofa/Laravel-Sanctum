@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Setting;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Ramsey\Collection\Set;
 
 class SettingSeeder extends Seeder
 {
@@ -18,19 +16,19 @@ class SettingSeeder extends Seeder
             'key' => 'site_name',
         ], [
             'value' => 'My Laravel App',
-            'type' => 'string'
+            'type' => 'string',
         ]);
         Setting::updateOrInsert([
             'key' => 'site_description',
         ], [
             'value' => 'A Laravel application with Sanctum and Spatie Permissions',
-            'type' => 'string'
+            'type' => 'string',
         ]);
         Setting::updateOrInsert([
             'key' => 'site_logo',
         ], [
             'value' => '',
-            'type' => 'file'
+            'type' => 'file',
         ]);
     }
 }

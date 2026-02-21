@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class SettingController extends Controller
+class DashboardController extends Controller
 {
     public function index()
     {
-        $settings = \App\Models\Setting::all()->toArray();
+        $userCount = User::count();
 
         return response()->json([
             'success' => true,
-            'settings' => $settings,
+            'user_count' => $userCount,
 
         ]);
     }
