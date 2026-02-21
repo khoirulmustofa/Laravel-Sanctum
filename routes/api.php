@@ -3,6 +3,16 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// Public Routes
+Route::post('/auth/register', [\App\Http\Controllers\Api\AuthController::class, 'register']);
+Route::post('/auth/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
+
+// Protected Routes (Butuh Token)
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/auth/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
+    Route::get('/auth/me', [\App\Http\Controllers\Api\AuthController::class, 'me']);
+});
+
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return response()->json([
         'success' => true,
