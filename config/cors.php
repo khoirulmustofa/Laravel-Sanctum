@@ -12,6 +12,7 @@ return [
         env('FRONTEND_MOBILE', 'http://localhost:8100'),
         'http://localhost:8100',
         'http://127.0.0.1:8100',
+        'https://service.nfbs-bogor.sch.id'
     ],
 
     'allowed_origins_patterns' => [],
