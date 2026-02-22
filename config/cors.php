@@ -12,7 +12,11 @@ return [
         env('FRONTEND_MOBILE', 'http://localhost:8100'),
         'http://localhost:8100',
         'http://127.0.0.1:8100',
-        'https://service.nfbs-bogor.sch.id'
+        'https://service.nfbs-bogor.sch.id',
+
+        // --- TAMBAHKAN BARIS DI BAWAH INI ---
+        'https://localhost',       // <--- PENTING: Origin default Capacitor Android
+        'capacitor://localhost',   // <--- Jaga-jaga jika pakai skema lama/iOS
     ],
 
     'allowed_origins_patterns' => [],
