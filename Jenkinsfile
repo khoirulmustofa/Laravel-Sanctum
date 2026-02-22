@@ -34,10 +34,10 @@ pipeline {
                             # --- BAGIAN KRUSIAL ---
                             # Kita salin file asli ke folder project agar bisa dibaca saat Docker Build
                             echo "[INFO] Menyalin file environment untuk proses build..."
-                            if [ -f "/home/nfbsb/.env/.env.kantin" ]; then
-                                cp /home/nfbsb/.env/.env.kantin .env
+                            if [ -f "/home/nfbsb/.env/.env.service" ]; then
+                                cp /home/nfbsb/.env/.env.service .env
                             else
-                                echo "[ERROR] File /home/nfbsb/.env/.env.kantin tidak ditemukan!"
+                                echo "[ERROR] File /home/nfbsb/.env/.env.service tidak ditemukan!"
                                 exit 1
                             fi
 
