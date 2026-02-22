@@ -12,8 +12,8 @@ RUN composer install --no-scripts --no-dev --optimize-autoloader
 # 5. Build Assets (NPM)
 # We combine these to keep layers small and remove node_modules after build if not needed 
 # (Note: Keep node_modules if your app needs them at runtime for some reason)
-RUN npm install && \
-    npm run build
+# RUN npm install && \
+#     npm run build
 
 # 6. Create Storage Structure & Set Permissions
 # Combining these into one RUN command significantly saves disk space
