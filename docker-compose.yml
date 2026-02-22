@@ -1,0 +1,19 @@
+networks:
+  nfbs_dev:
+    external: true
+services:
+  laravel:
+    container_name: backend_app
+    restart: unless-stopped
+  
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      - /home/nfbsb/asset/backend_app:/var/www/html/storage/app/public
+      
+    ports:
+    - "7070:80"
+    networks:
+      - nfbs_dev

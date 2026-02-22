@@ -47,36 +47,46 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        // 1. Validasi Input
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
+        try {
 
-        // 2. Cek Auth
-        if (!Auth::attempt($credentials)) {
+
+            // 1. Validasi Input
+            $credentials = $request->validate([
+                'email' => 'required|email',
+                'password' => 'required|string',
+            ]);
+
+            // 2. Cek Auth
+            if (!Auth::attempt($credentials)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Email atau password salah.',
+                    'data' => null
+                ], 401);
+            }
+
+            // 3. Ambil User & Token
+            $user = User::where('email', $request->email)->firstOrFail();
+
+            // Hapus token lama (opsional, agar 1 device login)
+            // $user->tokens()->delete();
+
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            // 4. Return JSON Manual
+            return response()->json([
+                'success' => true,
+                'message' => 'Login Berhasil',
+                'data' => $user,
+                'token' => $token
+            ], 200);
+        } catch (ValidationException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Email atau password salah.',
-                'data' => null
-            ], 401);
+                'message' => 'Validasi Gagal',
+                'data' => $e->errors()
+            ], 422);
         }
-
-        // 3. Ambil User & Token
-        $user = User::where('email', $request->email)->firstOrFail();
-
-        // Hapus token lama (opsional, agar 1 device login)
-        // $user->tokens()->delete();
-
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        // 4. Return JSON Manual
-        return response()->json([
-            'success' => true,
-            'message' => 'Login Berhasil',
-            'data' => $user,
-            'token' => $token
-        ], 200);
     }
 
     /**
