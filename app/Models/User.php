@@ -49,4 +49,13 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Tentukan token FCM untuk notifikasi ini.
+     */
+    public function routeNotificationForFcm()
+    {
+        // Pastikan kolom ini ada di database Anda
+        return $this->fcm_token; 
+    }
 }

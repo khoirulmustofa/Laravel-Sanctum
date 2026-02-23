@@ -28,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'telescope/*',
             'api/*',
+            'send-notif',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/auth/register', [\App\Http\Controllers\Api\AuthController::class, 'register']);
 Route::post('/auth/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
 
+Route::post('/auth/update-fcm-token', [\App\Http\Controllers\Api\AuthController::class, 'updateFcmToken']);
+
 // Protected Routes (Butuh Token)
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/auth/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);

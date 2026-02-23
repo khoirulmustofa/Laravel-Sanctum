@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'fcm' => [
+        'key' => env('FCM_SERVER_KEY'), // (Opsional, tapi untuk HTTP v1 utamakan JSON di atas)
+        'project_id' => 'eduparentapp-b645e', // Cek di Firebase Console > Project Settings
+    ],
+
 ];
