@@ -15,6 +15,7 @@ return [
         'https://service.nfbs-bogor.sch.id',
 
         // --- TAMBAHKAN BARIS DI BAWAH INI ---
+        'http://localhost',
         'https://localhost',       // <--- PENTING: Origin default Capacitor Android
         'capacitor://localhost',   // <--- Jaga-jaga jika pakai skema lama/iOS
     ],
