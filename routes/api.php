@@ -3,18 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// Public Routes
-Route::post('/auth/register', [\App\Http\Controllers\Api\AuthController::class, 'register']);
-Route::post('/auth/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
-
-Route::post('/auth/update-fcm-token', [\App\Http\Controllers\Api\AuthController::class, 'updateFcmToken']);
-
-// Protected Routes (Butuh Token)
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/auth/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
-    Route::get('/auth/me', [\App\Http\Controllers\Api\AuthController::class, 'me']);
-});
-
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return response()->json([
         'success' => true,
@@ -25,7 +13,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     ]);
 });
 
-Route::middleware([])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
         ->name('dashboard.index');
 
