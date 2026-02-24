@@ -13,7 +13,9 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     ]);
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::post('/send-notif', [\App\Http\Controllers\TestNotifController::class, 'sendDirect']);
+
+Route::middleware([''])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
         ->name('dashboard.index');
 
@@ -48,7 +50,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         ->name('roles.assignPermission');
     Route::put('/roles/{id}/permission-update', [\App\Http\Controllers\RoleController::class, 'permissionUpdate'])
         ->name('roles.permissionUpdate');
-
     Route::get('/roles/{id}/users', [\App\Http\Controllers\RoleController::class, 'users'])
         ->name('roles.users');
     Route::post('/roles/{id}/assign-user', [\App\Http\Controllers\RoleController::class, 'assignUser'])

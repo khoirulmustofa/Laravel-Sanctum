@@ -57,6 +57,14 @@ class User extends Authenticatable
     public function routeNotificationForFcm()
     {
         // Pastikan kolom ini ada di database Anda
-        return $this->fcm_token; 
+        return $this->fcm_token;
+    }
+
+    /**
+     * push notification
+     */
+    public function pushNotifications()
+    {
+        return $this->hasMany(PushNotification::class);
     }
 }

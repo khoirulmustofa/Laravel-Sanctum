@@ -114,11 +114,25 @@ class UserController extends Controller
         $page = $request->input('page', 1);
         $limit = $request->input('limit', 10);
         $search = $request->input('search');
+        $sortFields = $request->input('sort');
+        $sortOrders = $request->input('order');
 
         $query = Role::query();
 
         if ($search) {
             $query->where('name', 'like', "%{$search}%");
+        }
+
+        if ($sortFields) {
+            $fields = explode(',', $sortFields);
+            $orders = explode(',', $sortOrders);
+
+            foreach ($fields as $index => $field) {
+                $direction = isset($orders[$index]) ? $orders[$index] : 'asc';
+                $query->orderBy($field, $direction);
+            }
+        } else {
+            $query->orderBy('name', 'asc');
         }
 
         $roles = $query->paginate($limit, ['*'], 'page', $page);
@@ -172,13 +186,35 @@ class UserController extends Controller
         $page = $request->input('page', 1);
         $limit = $request->input('limit', 10);
         $search = $request->input('search');
+        $sortFields = $request->input('sort');
+        $sortOrders = $request->input('order');
 
         $query = Permission::query();
 
+        // 1. Logic Search (Gunakan Parameter Grouping agar tidak merusak query lain)
         if ($search) {
-            $query->where('name', 'like', "%{$search}%");
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('group', 'like', "%{$search}%");
+            });
         }
 
+        // 2. Logic Sorting
+        if ($sortFields) {
+            $fields = explode(',', $sortFields);
+            $orders = explode(',', $sortOrders);
+
+            foreach ($fields as $index => $field) {
+                // Pastikan field yang dikirim valid untuk menghindari SQL Injection manual
+                $direction = (isset($orders[$index]) && strtolower($orders[$index]) === 'desc') ? 'desc' : 'asc';
+                $query->orderBy($field, $direction);
+            }
+        } else {
+            // Default sorting jika tidak ada request sort
+            $query->orderBy('name', 'asc');
+        }
+
+        // 3. Eksekusi Pagination
         $permissions = $query->paginate($limit, ['*'], 'page', $page);
 
         // Kelompokkan ID berdasarkan sumbernya

@@ -9,16 +9,41 @@ class PermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     * php artisan db:seed --class=PermissionSeeder
      */
     public function run(): void
     {
-        Permission::create(['name' => 'User List']);
-        Permission::create(['name' => 'User Create']);
-        Permission::create(['name' => 'User Edit']);
-        Permission::create(['name' => 'User Delete']);
-        Permission::create(['name' => 'Role List']);
-        Permission::create(['name' => 'Role Create']);
-        Permission::create(['name' => 'Role Edit']);
-        Permission::create(['name' => 'Role Delete']);
+
+        $permissions = [
+            // ========== USER ========== 
+            ['name' => 'User Index', 'group' => 'User'],
+            ['name' => 'User Create', 'group' => 'User'],
+            ['name' => 'User Edit', 'group' => 'User'],
+            ['name' => 'User Delete', 'group' => 'User'],
+            ['name' => 'User Assign Role', 'group' => 'User'],
+            ['name' => 'User Assign Permission', 'group' => 'User'],
+
+            // ========== ROLE ========== 
+            ['name' => 'Role Index', 'group' => 'Role'],
+            ['name' => 'Role Create', 'group' => 'Role'],
+            ['name' => 'Role Edit', 'group' => 'Role'],
+            ['name' => 'Role Delete', 'group' => 'Role'],
+            ['name' => 'Role Assign User', 'group' => 'Role'],
+            ['name' => 'Role Assign Permission', 'group' => 'Role'],
+        ];
+
+
+        // 2. Lakukan Update atau Create
+        foreach ($permissions as $permission) {
+            Permission::updateOrCreate(
+                ['name' => $permission['name']],
+                ['group' => $permission['group']]
+            );
+        }
+
+        // 3. Hapus permission yang tidak ada di dalam daftar $permissions di atas
+        $validNames = collect($permissions)->pluck('name')->toArray();
+
+        Permission::whereNotIn('name', $validNames)->delete();
     }
 }

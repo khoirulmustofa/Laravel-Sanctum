@@ -99,14 +99,40 @@ class RoleController extends Controller
 
     public function permissions(Request $request, $id)
     {
-        // 1. Cari Role-nya
         $role = Role::findOrFail($id);
 
-        // 2. Ambil semua nama permission yang dimiliki role ini
+        $page = $request->input('page', 1);
+        $limit = $request->input('limit', 10);
+        $search = $request->input('search');
+        $sortFields = $request->input('sort');
+        $sortOrders = $request->input('order');
+
+
+        $query = Permission::query();
+
+        if ($search) {
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('group', 'like', "%{$search}%");
+        }
+
+        if ($sortFields) {
+            $fields = explode(',', $sortFields);
+            $orders = explode(',', $sortOrders);
+
+            foreach ($fields as $index => $field) {
+                $direction = isset($orders[$index]) ? $orders[$index] : 'asc';
+                $query->orderBy($field, $direction);
+            }
+        } else {
+            $query->orderBy('name', 'asc');
+        }
+
+
+        $permissions = $query->paginate($limit, ['*'], 'page', $page);
+
         $rolePermissions = $role->permissions->pluck('name')->toArray();
 
-        // 3. Ambil semua permission di system, lalu mapping
-        $allPermissions = Permission::all()->map(function ($permission) use ($rolePermissions) {
+        $data = collect($permissions->items())->map(function ($permission) use ($rolePermissions) {
             return [
                 'id' => $permission->id,
                 'name' => $permission->name,
@@ -118,7 +144,12 @@ class RoleController extends Controller
         return response()->json([
             'success' => true,
             'role_name' => $role->name,
-            'data' => $allPermissions
+            'data' => $data,
+            'meta' => [
+                'total' => $permissions->total(),
+                'current_page' => $permissions->currentPage(),
+                'last_page' => $permissions->lastPage(),
+            ],
         ]);
     }
 
@@ -176,6 +207,8 @@ class RoleController extends Controller
         $page = $request->input('page', 1);
         $limit = $request->input('limit', 10);
         $search = $request->input('search');
+        $sortFields = $request->input('sort');
+        $sortOrders = $request->input('order');
 
         $query = \App\Models\User::query();
 
@@ -184,6 +217,18 @@ class RoleController extends Controller
                 $q->where('name', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%");
             });
+        }
+
+        if ($sortFields) {
+            $fields = explode(',', $sortFields);
+            $orders = explode(',', $sortOrders);
+
+            foreach ($fields as $index => $field) {
+                $direction = isset($orders[$index]) ? $orders[$index] : 'asc';
+                $query->orderBy($field, $direction);
+            }
+        } else {
+            $query->orderBy('name', 'asc');
         }
 
         $users = $query->paginate($limit, ['*'], 'page', $page);
