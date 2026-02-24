@@ -5,11 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:User Index', only: ['index']),
+            new Middleware('permission:User Create', only: ['store']),
+            new Middleware('permission:User Edit', only: ['update']),
+            new Middleware('permission:User Delete', only: ['destroy']),
+            new Middleware('permission:User Assign Permission', only: ['permissions', 'assignPermission']),
+            new Middleware('permission:User Assign Role', only: ['roles', 'assignRole']),
+        ];
+    }
+
     public function index(Request $request)
     {
         $page = $request->input('page', 1);
@@ -85,7 +98,7 @@ class UserController extends Controller
 
             // 1. Buat nama file baru: setting_1708310000.jpg
             $extension = $file->getClientOriginalExtension();
-            $fileName = 'setting_' . time() . '.' . $extension;
+            $fileName = 'setting_'.time().'.'.$extension;
 
             // 2. Simpan ke folder 'uploads/settings' di dalam disk 'public'
             // Ini akan tersimpan di: storage/app/public/uploads/settings
@@ -143,7 +156,7 @@ class UserController extends Controller
             return [
                 'id' => $role->id,
                 'name' => $role->name,
-                'assigned' => in_array($role->name, $userRoleNames)
+                'assigned' => in_array($role->name, $userRoleNames),
             ];
         });
 
@@ -165,19 +178,20 @@ class UserController extends Controller
 
         if ($request->action === 'assign') {
             $user->assignRole($request->role);
+
             return response()->json([
                 'success' => true,
-                'message' => "Role '{$request->role}' assigned to user '{$user->name}' successfully."
+                'message' => "Role '{$request->role}' assigned to user '{$user->name}' successfully.",
             ]);
         } else {
             $user->removeRole($request->role);
+
             return response()->json([
                 'success' => true,
-                'message' => "Role '{$request->role}' removed from user '{$user->name}' successfully."
+                'message' => "Role '{$request->role}' removed from user '{$user->name}' successfully.",
             ]);
         }
     }
-
 
     public function permissions(Request $request, $id)
     {
@@ -233,8 +247,8 @@ class UserController extends Controller
                 'source' => [
                     'is_direct' => $isDirect,
                     'is_via_role' => $isViaRole,
-                    'label' => $this->getPermissionLabel($isDirect, $isViaRole)
-                ]
+                    'label' => $this->getPermissionLabel($isDirect, $isViaRole),
+                ],
             ];
         });
 
@@ -255,9 +269,16 @@ class UserController extends Controller
      */
     private function getPermissionLabel($isDirect, $isViaRole)
     {
-        if ($isDirect && $isViaRole) return 'Direct & Role';
-        if ($isDirect) return 'Direct';
-        if ($isViaRole) return 'Via Role';
+        if ($isDirect && $isViaRole) {
+            return 'Direct & Role';
+        }
+        if ($isDirect) {
+            return 'Direct';
+        }
+        if ($isViaRole) {
+            return 'Via Role';
+        }
+
         return 'None';
     }
 
@@ -267,15 +288,17 @@ class UserController extends Controller
 
         if ($request->action === 'assign') {
             $user->givePermissionTo($request->permission);
+
             return response()->json([
                 'success' => true,
-                'message' => "Permission '{$request->permission}' assigned to user '{$user->name}' successfully."
+                'message' => "Permission '{$request->permission}' assigned to user '{$user->name}' successfully.",
             ]);
         } else {
             $user->revokePermissionTo($request->permission);
+
             return response()->json([
                 'success' => true,
-                'message' => "Permission '{$request->permission}' removed from user '{$user->name}' successfully."
+                'message' => "Permission '{$request->permission}' removed from user '{$user->name}' successfully.",
             ]);
         }
     }

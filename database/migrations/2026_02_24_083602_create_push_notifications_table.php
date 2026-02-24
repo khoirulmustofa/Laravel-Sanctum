@@ -15,21 +15,21 @@ return new class extends Migration
             $table->id();
             // Relasi ke user
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            
+
             // Konten Notifikasi
             $table->string('title');
             $table->text('body');
             $table->string('image')->nullable();
-            
+
             // Metadata (Sangat penting untuk navigasi di Ionic)
             $table->string('type')->nullable(); // misal: 'announcement', 'payment', 'assignment'
             $table->string('related_id')->nullable(); // ID pengumuman/tugas yang terkait
-            
+
             // Status Pelacakan
             $table->boolean('is_sent')->default(false);
             $table->boolean('is_read')->default(false);
             $table->timestamp('read_at')->nullable();
-            
+
             $table->timestamps();
         });
     }

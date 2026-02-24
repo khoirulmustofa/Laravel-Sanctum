@@ -38,7 +38,7 @@ class AuthController extends Controller
             'success' => true,
             'message' => 'Registrasi Berhasil',
             'data' => $user,
-            'token' => $token
+            'token' => $token,
         ], 201);
     }
 
@@ -49,7 +49,6 @@ class AuthController extends Controller
     {
         try {
 
-
             // 1. Validasi Input
             $credentials = $request->validate([
                 'email' => 'required|email',
@@ -57,11 +56,11 @@ class AuthController extends Controller
             ]);
 
             // 2. Cek Auth
-            if (!Auth::attempt($credentials)) {
+            if (! Auth::attempt($credentials)) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Email atau password salah.',
-                    'data' => null
+                    'data' => null,
                 ], 401);
             }
 
@@ -78,13 +77,13 @@ class AuthController extends Controller
                 'success' => true,
                 'message' => 'Login Berhasil',
                 'data' => $user,
-                'token' => $token
+                'token' => $token,
             ], 200);
         } catch (ValidationException $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Validasi Gagal',
-                'data' => $e->errors()
+                'data' => $e->errors(),
             ], 422);
         }
     }
@@ -100,7 +99,7 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Logout Berhasil',
-            'data' => null
+            'data' => null,
         ], 200);
     }
 
@@ -112,7 +111,7 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Data User',
-            'data' => $request->user()
+            'data' => $request->user(),
         ], 200);
     }
 
@@ -122,18 +121,18 @@ class AuthController extends Controller
     public function updateFcmToken(Request $request)
     {
         $request->validate([
-            'fcm_token' => 'nullable|string'
+            'fcm_token' => 'nullable|string',
         ]);
 
         // Simpan token ke user yang sedang login
         $request->user()->update([
-            'fcm_token' => $request->fcm_token
+            'fcm_token' => $request->fcm_token,
         ]);
 
         return response()->json([
             'success' => true,
             'message' => 'Token updated',
-            'data' => $request->user()
+            'data' => $request->user(),
         ], 200);
     }
 }

@@ -28,7 +28,7 @@ class SendPushNotification implements ShouldQueue
             'token' => $this->fcmToken,
             'notification' => [
                 'title' => $this->data['title'],
-                'body'  => $this->data['body'],
+                'body' => $this->data['body'],
                 'image' => $this->data['image'] ?? null,
             ],
             'data' => [
@@ -51,7 +51,7 @@ class SendPushNotification implements ShouldQueue
             // Update status di database jika berhasil
             PushNotification::find($this->notifLogId)?->update(['is_sent' => true]);
         } catch (\Exception $e) {
-            Log::error("Gagal kirim FCM: " . $e->getMessage());
+            Log::error('Gagal kirim FCM: '.$e->getMessage());
         }
     }
 }

@@ -6,8 +6,6 @@ use App\Jobs\SendPushNotification;
 use App\Models\PushNotification;
 use Illuminate\Http\Request;
 use Kreait\Firebase\Contract\Messaging;
-use Kreait\Firebase\Messaging\CloudMessage;
-use Kreait\Firebase\Messaging\Notification;
 
 class TestNotifController extends Controller
 {
@@ -27,10 +25,10 @@ class TestNotifController extends Controller
         // 2. Simpan Log ke Tabel push_notifications (is_sent masih false)
         $log = PushNotification::create([
             'user_id' => $request->user_id,
-            'title'   => $request->title,
-            'body'    => $request->body,
-            'image'   => $request->image,
-            'type'    => $request->type ?? 'general',
+            'title' => $request->title,
+            'body' => $request->body,
+            'image' => $request->image,
+            'type' => $request->type ?? 'general',
             'related_id' => $request->related_id,
             'is_sent' => false,
         ]);
@@ -45,7 +43,7 @@ class TestNotifController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Notifikasi masuk antrean!',
-            'log_id' => $log->id
+            'log_id' => $log->id,
         ]);
     }
 }

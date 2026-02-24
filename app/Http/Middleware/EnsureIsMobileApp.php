@@ -22,7 +22,7 @@ class EnsureIsMobileApp
         if ($request->header('X-Mobile-App') !== $mobileSecret) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthorized Access: Mobile App Only'
+                'message' => 'Unauthorized Access: Mobile App Only',
             ], 403);
         }
 

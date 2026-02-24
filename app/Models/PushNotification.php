@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class PushNotification extends Model
 {
     protected $table = 'push_notifications';
+
     protected $primaryKey = 'id';
+
     public $incrementing = true;
+
     public $timestamps = true;
-   
+
     protected $guarded = [];
-    
+
     protected $casts = [
         'is_sent' => 'boolean',
         'is_read' => 'boolean',

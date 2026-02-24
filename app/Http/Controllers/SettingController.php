@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
 
 class SettingController extends Controller
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Setting Index', only: ['index']),
+            new Middleware('permission:Setting Edit', only: ['update']),
+        ];
+    }
+
     public function index()
     {
         $settings = \App\Models\Setting::all()->toArray();

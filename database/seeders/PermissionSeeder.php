@@ -15,7 +15,10 @@ class PermissionSeeder extends Seeder
     {
 
         $permissions = [
-            // ========== USER ========== 
+            // ========== DASHBOARD ==========
+            ['name' => 'Dashboard Index', 'group' => 'Dashboard'],
+
+            // ========== USER ==========
             ['name' => 'User Index', 'group' => 'User'],
             ['name' => 'User Create', 'group' => 'User'],
             ['name' => 'User Edit', 'group' => 'User'],
@@ -23,15 +26,18 @@ class PermissionSeeder extends Seeder
             ['name' => 'User Assign Role', 'group' => 'User'],
             ['name' => 'User Assign Permission', 'group' => 'User'],
 
-            // ========== ROLE ========== 
+            // ========== ROLE ==========
             ['name' => 'Role Index', 'group' => 'Role'],
             ['name' => 'Role Create', 'group' => 'Role'],
             ['name' => 'Role Edit', 'group' => 'Role'],
             ['name' => 'Role Delete', 'group' => 'Role'],
             ['name' => 'Role Assign User', 'group' => 'Role'],
             ['name' => 'Role Assign Permission', 'group' => 'Role'],
-        ];
 
+            // ========== SETTING ==========
+            ['name' => 'Setting Index', 'group' => 'Setting'],
+            ['name' => 'Setting Edit', 'group' => 'Setting'],
+        ];
 
         // 2. Lakukan Update atau Create
         foreach ($permissions as $permission) {

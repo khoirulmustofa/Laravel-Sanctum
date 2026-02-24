@@ -14,6 +14,6 @@ Route::middleware(['mobile.check'])->group(function () {
         Route::get('/me', [\App\Http\Controllers\Api\AuthController::class, 'me']);
         Route::post('/update-fcm-token', [\App\Http\Controllers\Api\AuthController::class, 'updateFcmToken']);
         Route::post('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
-    
+
     });
 });

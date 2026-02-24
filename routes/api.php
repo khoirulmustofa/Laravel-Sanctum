@@ -19,7 +19,6 @@ Route::middleware([''])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
         ->name('dashboard.index');
 
-
     Route::get('/settings', [\App\Http\Controllers\SettingController::class, 'index'])
         ->name('settings.index');
     Route::put('/settings/{key}', [\App\Http\Controllers\SettingController::class, 'update'])
@@ -48,13 +47,10 @@ Route::middleware([''])->group(function () {
         ->name('roles.permissions');
     Route::post('/roles/{id}/assign-permission', [\App\Http\Controllers\RoleController::class, 'assignPermission'])
         ->name('roles.assignPermission');
-    Route::put('/roles/{id}/permission-update', [\App\Http\Controllers\RoleController::class, 'permissionUpdate'])
-        ->name('roles.permissionUpdate');
     Route::get('/roles/{id}/users', [\App\Http\Controllers\RoleController::class, 'users'])
         ->name('roles.users');
     Route::post('/roles/{id}/assign-user', [\App\Http\Controllers\RoleController::class, 'assignUser'])
         ->name('roles.assignUser');
-
 
     Route::get('/permissions', [\App\Http\Controllers\PermissionController::class, 'index'])
         ->name('permissions.index');

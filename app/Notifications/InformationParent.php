@@ -3,8 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Fcm\FcmChannel;
 use NotificationChannels\Fcm\FcmMessage;
@@ -15,6 +13,7 @@ class InformationParent extends Notification
     use Queueable;
 
     protected string $title;
+
     protected string $body;
 
     /**
@@ -26,7 +25,7 @@ class InformationParent extends Notification
         $this->body = $body;
     }
 
- public function via($notifiable)
+    public function via($notifiable)
     {
         return [FcmChannel::class];
     }
@@ -34,25 +33,25 @@ class InformationParent extends Notification
     public function toFcm($notifiable): FcmMessage
     {
         return (new FcmMessage(notification: new FcmNotification(
-                title: 'Account Activated',
-                body: 'Your account has been activated.',
-                image: 'https://placehold.co/600x400?text=test'
-            )))
+            title: 'Account Activated',
+            body: 'Your account has been activated.',
+            image: 'https://placehold.co/600x400?text=test'
+        )))
             ->data(['data1' => 'value', 'data2' => 'value2'])
             ->custom([
-                'android' => [
-                    'notification' => [
-                        'color' => '#0A0A0A',
-                    ],
-                    'fcm_options' => [
-                        'analytics_label' => 'analytics',
-                    ],
+            'android' => [
+                'notification' => [
+                    'color' => '#0A0A0A',
                 ],
-                'apns' => [
-                    'fcm_options' => [
-                        'analytics_label' => 'analytics',
-                    ],
+                'fcm_options' => [
+                    'analytics_label' => 'analytics',
                 ],
-            ]);
+            ],
+            'apns' => [
+                'fcm_options' => [
+                    'analytics_label' => 'analytics',
+                ],
+            ],
+        ]);
     }
 }

@@ -3,12 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Role Index', only: ['index']),
+            new Middleware('permission:Role Create', only: ['store']),
+            new Middleware('permission:Role Edit', only: ['update']),
+            new Middleware('permission:Role Delete', only: ['destroy']),
+            new Middleware('permission:Role Assign Permission', only: ['permissions', 'assignPermission']),
+            new Middleware('permission:Role Assign User', only: ['users', 'assignUser']),
+        ];
+    }
+
     public function index(Request $request)
     {
         $page = $request->input('page', 1);
@@ -57,13 +70,13 @@ class RoleController extends Controller
 
         $role = Role::create([
             'name' => $request->name,
-            'guard_name' => 'web'
+            'guard_name' => 'web',
         ]);
 
         return response()->json([
             'success' => true,
             'message' => 'Role created successfully',
-            'data' => $role
+            'data' => $role,
         ]);
     }
 
@@ -72,17 +85,17 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
 
         $request->validate([
-            'name' => 'required|unique:roles,name,' . $id,
+            'name' => 'required|unique:roles,name,'.$id,
         ]);
 
         $role->update([
-            'name' => $request->name
+            'name' => $request->name,
         ]);
 
         return response()->json([
             'success' => true,
             'message' => 'Role updated successfully',
-            'data' => $role
+            'data' => $role,
         ]);
     }
 
@@ -93,7 +106,7 @@ class RoleController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Role deleted successfully'
+            'message' => 'Role deleted successfully',
         ]);
     }
 
@@ -106,7 +119,6 @@ class RoleController extends Controller
         $search = $request->input('search');
         $sortFields = $request->input('sort');
         $sortOrders = $request->input('order');
-
 
         $query = Permission::query();
 
@@ -127,7 +139,6 @@ class RoleController extends Controller
             $query->orderBy('name', 'asc');
         }
 
-
         $permissions = $query->paginate($limit, ['*'], 'page', $page);
 
         $rolePermissions = $role->permissions->pluck('name')->toArray();
@@ -137,7 +148,7 @@ class RoleController extends Controller
                 'id' => $permission->id,
                 'name' => $permission->name,
                 'group' => $permission->group,
-                'assigned' => in_array($permission->name, $rolePermissions)
+                'assigned' => in_array($permission->name, $rolePermissions),
             ];
         });
 
@@ -153,25 +164,6 @@ class RoleController extends Controller
         ]);
     }
 
-    public function permissionUpdate(Request $request, $id)
-    {
-        $role = Role::findOrFail($id);
-
-        $request->validate([
-            'permissions' => 'array'
-        ]);
-
-        if ($request->has('permissions')) {
-            $role->syncPermissions($request->permissions);
-        }
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Permissions updated successfully',
-            'data' => $role
-        ]);
-    }
-
     public function assignPermission(Request $request, $id)
     {
         try {
@@ -179,23 +171,26 @@ class RoleController extends Controller
             $role = Role::findOrFail($id);
             if ($request->action === 'assign') {
                 $role->givePermissionTo($request->permission);
+
                 return response()->json([
                     'success' => true,
-                    'message' => "Permission assigned to role '{$role->name}' successfully."
+                    'message' => "Permission assigned to role '{$role->name}' successfully.",
                 ]);
             } else {
                 $role->revokePermissionTo($request->permission);
+
                 return response()->json([
                     'success' => true,
-                    'message' => "Permission revoked from role '{$role->name}' successfully."
+                    'message' => "Permission revoked from role '{$role->name}' successfully.",
                 ]);
             }
         } catch (\Exception $e) {
-            Log::error("Error assigning permission: " . $e->getMessage());
+            Log::error('Error assigning permission: '.$e->getMessage());
+
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to assign permission. Please try again.',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -235,6 +230,7 @@ class RoleController extends Controller
 
         $data = collect($users->items())->map(function ($user) use ($role) {
             $user->assigned = $user->hasRole($role->name);
+
             return $user;
         });
 
@@ -256,15 +252,17 @@ class RoleController extends Controller
 
         if ($request->action === 'assign') {
             $user->assignRole($role->name);
+
             return response()->json([
                 'success' => true,
-                'message' => "User '{$user->name}' assigned to role '{$role->name}' successfully."
+                'message' => "User '{$user->name}' assigned to role '{$role->name}' successfully.",
             ]);
         } else {
             $user->removeRole($role->name);
+
             return response()->json([
                 'success' => true,
-                'message' => "User '{$user->name}' removed from role '{$role->name}' successfully."
+                'message' => "User '{$user->name}' removed from role '{$role->name}' successfully.",
             ]);
         }
     }
