@@ -18,6 +18,9 @@ class PermissionSeeder extends Seeder
             // ========== DASHBOARD ==========
             ['name' => 'Dashboard Index', 'group' => 'Dashboard'],
 
+            // ========== MASTER ==========
+            ['name' => 'Master Index', 'group' => 'Master'],
+
             // ========== USER ==========
             ['name' => 'User Index', 'group' => 'User'],
             ['name' => 'User Create', 'group' => 'User'],
@@ -37,6 +40,30 @@ class PermissionSeeder extends Seeder
             // ========== SETTING ==========
             ['name' => 'Setting Index', 'group' => 'Setting'],
             ['name' => 'Setting Edit', 'group' => 'Setting'],
+
+            // ========== SEKOLAH ==========
+            ['name' => 'Sekolah Index', 'group' => 'Sekolah'],
+            ['name' => 'Sekolah Create', 'group' => 'Sekolah'],
+            ['name' => 'Sekolah Edit', 'group' => 'Sekolah'],
+            ['name' => 'Sekolah Delete', 'group' => 'Sekolah'],
+
+            // ========== TAHUN AJARAN ==========
+            ['name' => 'Tahun Ajaran Index', 'group' => 'Tahun Ajaran'],
+            ['name' => 'Tahun Ajaran Create', 'group' => 'Tahun Ajaran'],
+            ['name' => 'Tahun Ajaran Edit', 'group' => 'Tahun Ajaran'],
+            ['name' => 'Tahun Ajaran Delete', 'group' => 'Tahun Ajaran'],
+
+            // ========== KELAS ==========
+            ['name' => 'Kelas Index', 'group' => 'Kelas'],
+            ['name' => 'Kelas Create', 'group' => 'Kelas'],
+            ['name' => 'Kelas Edit', 'group' => 'Kelas'],
+            ['name' => 'Kelas Delete', 'group' => 'Kelas'],
+
+            // ========== SISWA ==========
+            ['name' => 'Siswa Index', 'group' => 'Siswa'],
+            ['name' => 'Siswa Create', 'group' => 'Siswa'],
+            ['name' => 'Siswa Edit', 'group' => 'Siswa'],
+            ['name' => 'Siswa Delete', 'group' => 'Siswa'],
         ];
 
         // 2. Lakukan Update atau Create
