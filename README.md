@@ -10,3 +10,5 @@ scp /home/nfbs/php/Laravel-Sanctum/.env.service root@192.168.100.125:/home/nfbsb
 
 // php artisan db:seed --class=PermissionSeeder
 // php artisan make:model Setting -m
+
+// php artisan migrate:fresh --seed

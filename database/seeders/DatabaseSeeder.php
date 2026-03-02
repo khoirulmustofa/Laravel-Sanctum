@@ -15,19 +15,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-        $this->call(PermissionSeeder::class);
-        $this->call(RoleSeeder::class);
+        $this->call([
+            UserSeeder::class,
+            SettingSeeder::class,
+            PermissionSeeder::class,
+            RoleSeeder::class,
 
-        $user = new User;
-        $user->name = 'Admin';
-        $user->email = 'admin@admin.com';
-        $user->password = 'password';
-        $user->email_verified_at = now();
-        $user->save();
+            TahunAjaranSeeder::class,
+            SemesterSeeder::class,
 
-        $user->assignRole('Admin');
+            SekolahSeeder::class,
+            KelasSeeder::class,
 
-        $this->call(SettingSeeder::class);
+            SiswaSeeder::class,
+            SiswaAlamatSeeder::class,
+            SiswaOrangTuaSeeder::class,
+            SiswaKelasSeeder::class,
+        ]);
     }
 }

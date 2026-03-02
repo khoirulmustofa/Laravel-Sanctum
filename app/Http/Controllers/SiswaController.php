@@ -39,6 +39,7 @@ class SiswaController extends Controller implements HasMiddleware
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('siswa.nama_lengkap', 'like', "%{$search}%")
+                    ->orWhere('siswa.nis', 'like', "%{$search}%")
                     ->orWhere('siswa.nisn', 'like', "%{$search}%")
                     ->orWhere('siswa.nik', 'like', "%{$search}%")
                     ->orWhere('siswa.email_pribadi', 'like', "%{$search}%")

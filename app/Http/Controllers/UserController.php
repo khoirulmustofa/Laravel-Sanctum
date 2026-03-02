@@ -98,7 +98,7 @@ class UserController extends Controller
 
             // 1. Buat nama file baru: setting_1708310000.jpg
             $extension = $file->getClientOriginalExtension();
-            $fileName = 'setting_'.time().'.'.$extension;
+            $fileName = 'setting_' . time() . '.' . $extension;
 
             // 2. Simpan ke folder 'uploads/settings' di dalam disk 'public'
             // Ini akan tersimpan di: storage/app/public/uploads/settings

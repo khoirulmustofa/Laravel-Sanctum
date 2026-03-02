@@ -23,18 +23,24 @@ return new class extends Migration
             $table->string('pekerjaan_ayah')->nullable();
             $table->string('pendidikan_ayah')->nullable();
             $table->decimal('penghasilan_ayah', 15, 2)->nullable();
+            $table->string('no_telepon_ayah')->nullable();
+            $table->string('email_ayah')->nullable();
 
             // Ibu
             $table->string('nama_ibu')->nullable();
             $table->string('pekerjaan_ibu')->nullable();
             $table->string('pendidikan_ibu')->nullable();
             $table->decimal('penghasilan_ibu', 15, 2)->nullable();
+            $table->string('no_telepon_ibu')->nullable();
+            $table->string('email_ibu')->nullable();
 
             // Wali
             $table->string('nama_wali')->nullable();
             $table->string('pekerjaan_wali')->nullable();
             $table->string('pendidikan_wali')->nullable();
             $table->decimal('penghasilan_wali', 15, 2)->nullable();
+            $table->string('no_telepon_wali')->nullable();
+            $table->string('email_wali')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

@@ -19,16 +19,7 @@ class Kelas extends Model
 
     protected $guarded = [];
 
-    protected static function boot()
-    {
-        parent::boot();
 
-        static::creating(function ($model) {
-            if (empty($model->id)) {
-                $model->id = (string) \Illuminate\Support\Str::uuid();
-            }
-        });
-    }
 
     public function siswa_kelas()
     {

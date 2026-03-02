@@ -14,10 +14,8 @@ class UserSeeder extends Seeder
     {
         User::create([
             'name' => 'Khoirul Mustofa',
-            'username' => 'khoirulmustofa',
             'email' => 'khoirulm@smpit-nfbogor.sch.id',
             'password' => 'K1r0l1m4570f4',
-            'role' => 'admin',
             'email_verified_at' => now(),
         ]);
     }

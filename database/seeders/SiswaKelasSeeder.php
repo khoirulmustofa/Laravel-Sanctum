@@ -34,7 +34,7 @@ class SiswaKelasSeeder extends Seeder
                 SiswaKelas::updateOrCreate(
                     [
                         'siswa_id' => $siswa->id,
-                        'tahun_ajaran' => $tahunAjaran->nama,
+                        'tahun_ajaran' => $tahunAjaran->tahun_ajaran,
                         'semester' => $semester->semester,
                     ],
                     [

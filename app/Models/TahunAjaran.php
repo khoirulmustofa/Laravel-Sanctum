@@ -23,15 +23,4 @@ class TahunAjaran extends Model
         'tanggal_mulai' => 'date:Y-m-d',
         'tanggal_selesai' => 'date:Y-m-d',
     ];
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-            if (empty($model->id)) {
-                $model->id = (string) \Illuminate\Support\Str::uuid();
-            }
-        });
-    }
 }

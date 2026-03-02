@@ -15,13 +15,13 @@ class TahunAjaranSeeder extends Seeder
         //  nama       tanggal_mulai  tanggal_selesai   aktif
         $tahunAjarans = [
             [
-                'nama' => '2024/2025',
+                'tahun_ajaran' => '2024/2025',
                 'tanggal_mulai' => '2024-07-01',
                 'tanggal_selesai' => '2025-06-30',
                 'aktif' => true,
             ],
             [
-                'nama' => '2025/2026',
+                'tahun_ajaran' => '2025/2026',
                 'tanggal_mulai' => '2025-07-01',
                 'tanggal_selesai' => '2026-06-30',
                 'aktif' => false,
