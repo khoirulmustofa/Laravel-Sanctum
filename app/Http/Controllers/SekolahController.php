@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Sekolah;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class SekolahController extends Controller implements HasMiddleware
 {
@@ -94,7 +94,7 @@ class SekolahController extends Controller implements HasMiddleware
         $request->validate([
             'nama_sekolah' => 'required|string',
             'nss' => 'nullable|string',
-            'npsn' => 'nullable|string|unique:sekolah,npsn,' . $id,
+            'npsn' => 'nullable|string|unique:sekolah,npsn,'.$id,
             'alamat_sekolah' => 'nullable|string',
             'kecamatan' => 'nullable|string',
             'kabupaten_kota' => 'nullable|string',

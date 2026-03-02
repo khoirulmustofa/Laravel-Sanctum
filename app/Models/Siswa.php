@@ -12,8 +12,11 @@ class Siswa extends Model
     use SoftDeletes;
 
     protected $table = 'siswa';
+
     protected $primaryKey = 'id';
+
     public $incrementing = false;
+
     protected $guarded = [];
 
     protected static function boot()

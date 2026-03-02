@@ -39,19 +39,19 @@ class InformationParent extends Notification
         )))
             ->data(['data1' => 'value', 'data2' => 'value2'])
             ->custom([
-            'android' => [
-                'notification' => [
-                    'color' => '#0A0A0A',
+                'android' => [
+                    'notification' => [
+                        'color' => '#0A0A0A',
+                    ],
+                    'fcm_options' => [
+                        'analytics_label' => 'analytics',
+                    ],
                 ],
-                'fcm_options' => [
-                    'analytics_label' => 'analytics',
+                'apns' => [
+                    'fcm_options' => [
+                        'analytics_label' => 'analytics',
+                    ],
                 ],
-            ],
-            'apns' => [
-                'fcm_options' => [
-                    'analytics_label' => 'analytics',
-                ],
-            ],
-        ]);
+            ]);
     }
 }

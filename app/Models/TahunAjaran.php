@@ -12,8 +12,11 @@ class TahunAjaran extends Model
     use SoftDeletes;
 
     protected $table = 'tahun_ajaran';
+
     protected $primaryKey = 'id';
+
     public $incrementing = false;
+
     protected $guarded = [];
 
     protected $casts = [

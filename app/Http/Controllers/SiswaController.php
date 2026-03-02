@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Sekolah;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
 
 class SiswaController extends Controller implements HasMiddleware
@@ -58,14 +58,14 @@ class SiswaController extends Controller implements HasMiddleware
 
                 if ($field === 'sekolah.nama_sekolah') {
                     $query->orderBy('sekolah.nama_sekolah', $direction);
-                } else if ($field === 'alamat.alamat_tempat_tinggal') {
+                } elseif ($field === 'alamat.alamat_tempat_tinggal') {
                     $query->orderBy('siswa_alamat.alamat_tempat_tinggal', $direction);
-                } else if ($field === 'orang_tua.nama_ayah') {
+                } elseif ($field === 'orang_tua.nama_ayah') {
                     $query->orderBy('siswa_orang_tua.nama_ayah', $direction);
-                } else if ($field === 'orang_tua.nama_ibu') {
+                } elseif ($field === 'orang_tua.nama_ibu') {
                     $query->orderBy('siswa_orang_tua.nama_ibu', $direction);
                 } else {
-                    $query->orderBy('siswa.' . $field, $direction);
+                    $query->orderBy('siswa.'.$field, $direction);
                 }
             }
         } else {
@@ -131,11 +131,11 @@ class SiswaController extends Controller implements HasMiddleware
         return DB::transaction(function () use ($validated) {
             $siswa = Siswa::create(collect($validated)->except(['alamat', 'orang_tua'])->toArray());
 
-            if (!empty($validated['alamat'])) {
+            if (! empty($validated['alamat'])) {
                 $siswa->alamat()->create($validated['alamat']);
             }
 
-            if (!empty($validated['orang_tua'])) {
+            if (! empty($validated['orang_tua'])) {
                 $siswa->orangTua()->create($validated['orang_tua']);
             }
 
@@ -155,7 +155,7 @@ class SiswaController extends Controller implements HasMiddleware
             'sekolah_id' => 'nullable|exists:sekolah,id',
             'nama_lengkap' => 'required|string',
             'jenis_kelamin' => 'required|in:L,P',
-            'nisn' => 'nullable|string|unique:siswa,nisn,' . $id,
+            'nisn' => 'nullable|string|unique:siswa,nisn,'.$id,
             'nik' => 'nullable|string',
             'tempat_lahir' => 'nullable|string',
             'tanggal_lahir' => 'nullable|date',
@@ -226,6 +226,7 @@ class SiswaController extends Controller implements HasMiddleware
     public function sekolah()
     {
         $sekolah = Sekolah::all();
+
         return response()->json([
             'success' => true,
             'data' => $sekolah,

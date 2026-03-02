@@ -12,8 +12,11 @@ class Semester extends Model
     use SoftDeletes;
 
     protected $table = 'semester';
+
     protected $primaryKey = 'id';
+
     public $incrementing = false;
+
     protected $guarded = [];
 
     protected static function boot()

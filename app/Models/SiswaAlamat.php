@@ -12,8 +12,11 @@ class SiswaAlamat extends Model
     use SoftDeletes;
 
     protected $table = 'siswa_alamat';
+
     protected $primaryKey = 'id';
+
     public $incrementing = false;
+
     protected $guarded = [];
 
     protected static function boot()
@@ -32,4 +35,3 @@ class SiswaAlamat extends Model
         return $this->belongsTo(Siswa::class);
     }
 }
-

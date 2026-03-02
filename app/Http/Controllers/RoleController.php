@@ -86,7 +86,7 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
 
         $request->validate([
-            'name' => 'required|unique:roles,name,' . $id,
+            'name' => 'required|unique:roles,name,'.$id,
         ]);
 
         $role->update([
@@ -186,7 +186,7 @@ class RoleController extends Controller
                 ]);
             }
         } catch (\Exception $e) {
-            Log::error('Error assigning permission: ' . $e->getMessage());
+            Log::error('Error assigning permission: '.$e->getMessage());
 
             return response()->json([
                 'success' => false,
@@ -272,7 +272,7 @@ class RoleController extends Controller
     {
         try {
             // Opsi 1: Memanggil Class langsung
-            $seeder = new PermissionSeeder();
+            $seeder = new PermissionSeeder;
             $seeder->run();
 
             // Opsi 2: Menggunakan Artisan Command (Lebih bersih jika seeder kompleks)
@@ -280,13 +280,13 @@ class RoleController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => "Permission seeder run successfully.",
+                'message' => 'Permission seeder run successfully.',
                 'timestamp' => now()->toDateTimeString(),
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => "Error running seeder: " . $e->getMessage(),
+                'message' => 'Error running seeder: '.$e->getMessage(),
             ], 500);
         }
     }

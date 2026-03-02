@@ -12,23 +12,26 @@ class SettingSeeder extends Seeder
      */
     public function run(): void
     {
-        Setting::updateOrInsert([
-            'key' => 'site_name',
-        ], [
-            'value' => 'My Laravel App',
-            'type' => 'string',
-        ]);
-        Setting::updateOrInsert([
-            'key' => 'site_description',
-        ], [
-            'value' => 'A Laravel application with Sanctum and Spatie Permissions',
-            'type' => 'string',
-        ]);
-        Setting::updateOrInsert([
-            'key' => 'site_logo',
-        ], [
-            'value' => '',
-            'type' => 'file',
-        ]);
+        $settings = [
+            [
+                'key' => 'site_name',
+                'value' => 'My Laravel App',
+                'type' => 'string',
+            ],
+            [
+                'key' => 'site_description',
+                'value' => 'A Laravel application with Sanctum and Spatie Permissions',
+                'type' => 'string',
+            ],
+            [
+                'key' => 'site_logo',
+                'value' => null,
+                'type' => 'file',
+            ],
+        ];
+
+        foreach ($settings as $setting) {
+            Setting::updateOrInsert($setting);
+        }
     }
 }

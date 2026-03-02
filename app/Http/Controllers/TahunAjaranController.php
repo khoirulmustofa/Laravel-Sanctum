@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\TahunAjaran;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class TahunAjaranController extends Controller implements HasMiddleware
 {
@@ -91,7 +91,7 @@ class TahunAjaranController extends Controller implements HasMiddleware
         $tahunAjaran = TahunAjaran::findOrFail($id);
 
         $request->validate([
-            'nama' => 'required|string|unique:tahun_ajaran,nama,' . $tahunAjaran->id,
+            'nama' => 'required|string|unique:tahun_ajaran,nama,'.$tahunAjaran->id,
             'tanggal_mulai' => 'required',
             'tanggal_selesai' => 'required',
             'aktif' => 'nullable|boolean',

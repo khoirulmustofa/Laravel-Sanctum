@@ -10,9 +10,13 @@ class Kelas extends Model
 {
     use HasUuids;
     use SoftDeletes;
+
     protected $table = 'kelas';
+
     protected $primaryKey = 'id';
+
     public $incrementing = false;
+
     protected $guarded = [];
 
     protected static function boot()

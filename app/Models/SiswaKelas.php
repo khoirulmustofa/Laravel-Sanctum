@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class SiswaKelas extends Model
 {
     protected $table = 'siswa_kelas';
+
     protected $primaryKey = 'id';
+
     public $incrementing = false;
+
     protected $guarded = [];
 
     protected static function boot()

@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Kelas;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class KelasController extends Controller implements HasMiddleware
 {
@@ -84,7 +84,7 @@ class KelasController extends Controller implements HasMiddleware
         $kelas = Kelas::findOrFail($id);
 
         $request->validate([
-            'nama' => 'required|string|unique:kelas,nama,' . $kelas->id,
+            'nama' => 'required|string|unique:kelas,nama,'.$kelas->id,
             'paralel' => 'required|numeric',
             'tipe' => 'required|string',
         ]);

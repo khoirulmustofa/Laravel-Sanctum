@@ -12,8 +12,11 @@ class SiswaOrangTua extends Model
     use SoftDeletes;
 
     protected $table = 'siswa_orang_tua';
+
     protected $primaryKey = 'id';
+
     public $incrementing = false;
+
     protected $guarded = [];
 
     protected static function boot()
