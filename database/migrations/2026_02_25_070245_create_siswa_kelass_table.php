@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('siswa_kelas', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('siswa_id')->constrained('siswa')->cascadeOnDelete()->nullable();
-            $table->foreignUuid('tahun_ajaran_id')->constrained('tahun_ajaran')->cascadeOnDelete()->nullable();
-            $table->foreignUuid('semester_id')->constrained('semester')->cascadeOnDelete()->nullable();
             $table->foreignUuid('kelas_id')->constrained('kelas')->cascadeOnDelete()->nullable();
+            $table->string('tahun_ajaran');
+            $table->integer('semester');
             $table->boolean('aktif')->default(false);
             $table->timestamps();
             $table->softDeletes();

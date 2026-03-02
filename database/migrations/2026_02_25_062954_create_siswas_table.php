@@ -19,6 +19,7 @@ return new class extends Migration
             // Identitas peserta didik
             $table->string('nama_lengkap');
             $table->enum('jenis_kelamin', ['L', 'P']);
+            $table->string('nis')->nullable()->unique();
             $table->string('nisn')->nullable()->unique();
             $table->string('nik')->nullable();
 
