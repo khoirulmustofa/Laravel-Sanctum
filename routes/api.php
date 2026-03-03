@@ -27,76 +27,96 @@ Route::middleware([''])->group(function () {
         ->name('settings.update');
 
     // =========== USER ===========
-    Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])
-        ->name('users.index');
-    Route::get('/users/{id}/roles', [\App\Http\Controllers\UserController::class, 'roles'])
-        ->name('users.roles');
-    Route::post('/users/{id}/assign-role', [\App\Http\Controllers\UserController::class, 'assignRole'])
-        ->name('users.assignRole');
-    Route::get('/users/{id}/permissions', [\App\Http\Controllers\UserController::class, 'permissions'])
-        ->name('users.permissions');
-    Route::post('/users/{id}/assign-permission', [\App\Http\Controllers\UserController::class, 'assignPermission'])
-        ->name('users.assignPermission');
+    Route::get('master/users', [\App\Http\Controllers\Master\UserController::class, 'index'])
+        ->name('master.users.index');
+    Route::get('master/users/{id}/roles', [\App\Http\Controllers\Master\UserController::class, 'roles'])
+        ->name('master.users.roles');
+    Route::post('master/users/{id}/assign-role', [\App\Http\Controllers\Master\UserController::class, 'assignRole'])
+        ->name('master.users.assignRole');
+    Route::get('master/users/{id}/permissions', [\App\Http\Controllers\Master\UserController::class, 'permissions'])
+        ->name('master.users.permissions');
+    Route::post('master/users/{id}/assign-permission', [\App\Http\Controllers\Master\UserController::class, 'assignPermission'])
+        ->name('master.users.assignPermission');
 
     // =========== ROLE ===========
-    Route::get('/roles', [\App\Http\Controllers\RoleController::class, 'index'])
-        ->name('roles.index');
-    Route::post('/roles/store', [\App\Http\Controllers\RoleController::class, 'store'])
-        ->name('roles.store');
-    Route::put('/roles/{id}/update', [\App\Http\Controllers\RoleController::class, 'update'])
-        ->name('roles.update');
-    Route::delete('/roles/{id}', [\App\Http\Controllers\RoleController::class, 'destroy'])
-        ->name('roles.destroy');
-    Route::get('/roles/{id}/permissions', [\App\Http\Controllers\RoleController::class, 'permissions'])
-        ->name('roles.permissions');
-    Route::post('/roles/{id}/assign-permission', [\App\Http\Controllers\RoleController::class, 'assignPermission'])
-        ->name('roles.assignPermission');
-    Route::get('/roles/{id}/users', [\App\Http\Controllers\RoleController::class, 'users'])
-        ->name('roles.users');
-    Route::post('/roles/{id}/assign-user', [\App\Http\Controllers\RoleController::class, 'assignUser'])
-        ->name('roles.assignUser');
-    Route::post('/roles/permission-seeder', [\App\Http\Controllers\RoleController::class, 'permissionSeeder'])
-        ->name('roles.permissionSeeder');
+    Route::get('master/roles', [\App\Http\Controllers\Master\RoleController::class, 'index'])
+        ->name('master.roles.index');
+    Route::post('master/roles/store', [\App\Http\Controllers\Master\RoleController::class, 'store'])
+        ->name('master.roles.store');
+    Route::put('master/roles/{id}/update', [\App\Http\Controllers\Master\RoleController::class, 'update'])
+        ->name('master.roles.update');
+    Route::delete('master/roles/{id}', [\App\Http\Controllers\Master\RoleController::class, 'destroy'])
+        ->name('master.roles.destroy');
+    Route::get('master/roles/{id}/permissions', [\App\Http\Controllers\Master\RoleController::class, 'permissions'])
+        ->name('master.roles.permissions');
+    Route::post('master/roles/{id}/assign-permission', [\App\Http\Controllers\Master\RoleController::class, 'assignPermission'])
+        ->name('master.roles.assignPermission');
+    Route::get('master/roles/{id}/users', [\App\Http\Controllers\Master\RoleController::class, 'users'])
+        ->name('master.roles.users');
+    Route::post('master/roles/{id}/assign-user', [\App\Http\Controllers\Master\RoleController::class, 'assignUser'])
+        ->name('master.roles.assignUser');
+    Route::post('master/roles/permission-seeder', [\App\Http\Controllers\Master\RoleController::class, 'permissionSeeder'])
+        ->name('master.roles.permissionSeeder');
 
     // =========== SEKOLAH ===========
-    Route::get('/sekolah', [\App\Http\Controllers\SekolahController::class, 'index'])
-        ->name('sekolah.index');
-    Route::post('/sekolah/store', [\App\Http\Controllers\SekolahController::class, 'store'])
-        ->name('sekolah.store');
-    Route::put('/sekolah/{id}/update', [\App\Http\Controllers\SekolahController::class, 'update'])
-        ->name('sekolah.update');
-    Route::delete('/sekolah/{id}', [\App\Http\Controllers\SekolahController::class, 'destroy'])
-        ->name('sekolah.destroy');
+    Route::get('master/sekolah', [\App\Http\Controllers\Master\SekolahController::class, 'index'])
+        ->name('master.sekolah.index');
+    Route::post('master/sekolah/store', [\App\Http\Controllers\Master\SekolahController::class, 'store'])
+        ->name('master.sekolah.store');
+    Route::put('master/sekolah/{id}/update', [\App\Http\Controllers\Master\SekolahController::class, 'update'])
+        ->name('master.sekolah.update');
+    Route::delete('master/sekolah/{id}', [\App\Http\Controllers\Master\SekolahController::class, 'destroy'])
+        ->name('master.sekolah.destroy');
 
     // =========== TAHUN AJARAN ===========
-    Route::get('/tahun-ajaran', [\App\Http\Controllers\TahunAjaranController::class, 'index'])
-        ->name('tahun-ajaran.index');
-    Route::post('/tahun-ajaran/store', [\App\Http\Controllers\TahunAjaranController::class, 'store'])
-        ->name('tahun-ajaran.store');
-    Route::put('/tahun-ajaran/{id}/update', [\App\Http\Controllers\TahunAjaranController::class, 'update'])
-        ->name('tahun-ajaran.update');
-    Route::delete('/tahun-ajaran/{id}', [\App\Http\Controllers\TahunAjaranController::class, 'destroy'])
-        ->name('tahun-ajaran.destroy');
+    Route::get('master/tahun-ajaran', [\App\Http\Controllers\Master\TahunAjaranController::class, 'index'])
+        ->name('master.tahun-ajaran.index');
+    Route::post('master/tahun-ajaran/store', [\App\Http\Controllers\Master\TahunAjaranController::class, 'store'])
+        ->name('master.tahun-ajaran.store');
+    Route::put('master/tahun-ajaran/{id}/update', [\App\Http\Controllers\Master\TahunAjaranController::class, 'update'])
+        ->name('master.tahun-ajaran.update');
+    Route::delete('master/tahun-ajaran/{id}', [\App\Http\Controllers\Master\TahunAjaranController::class, 'destroy'])
+        ->name('master.tahun-ajaran.destroy');
+    Route::get('master/tahun-ajaran/active', [\App\Http\Controllers\Master\TahunAjaranController::class, 'tahunAjaranActive'])
+        ->name('master.tahun-ajaran.active');
 
     // =========== KELAS ===========
-    Route::get('/kelas', [\App\Http\Controllers\KelasController::class, 'index'])
-        ->name('kelas.index');
-    Route::post('/kelas/store', [\App\Http\Controllers\KelasController::class, 'store'])
-        ->name('kelas.store');
-    Route::put('/kelas/{id}/update', [\App\Http\Controllers\KelasController::class, 'update'])
-        ->name('kelas.update');
-    Route::delete('/kelas/{id}', [\App\Http\Controllers\KelasController::class, 'destroy'])
-        ->name('kelas.destroy');
+    Route::get('master/kelas', [\App\Http\Controllers\Master\KelasController::class, 'index'])
+        ->name('master.kelas.index');
+    Route::post('master/kelas/store', [\App\Http\Controllers\Master\KelasController::class, 'store'])
+        ->name('master.kelas.store');
+    Route::put('master/kelas/{id}/update', [\App\Http\Controllers\Master\KelasController::class, 'update'])
+        ->name('master.kelas.update');
+    Route::delete('master/kelas/{id}', [\App\Http\Controllers\Master\KelasController::class, 'destroy'])
+        ->name('master.kelas.destroy');
+    Route::get('master/kelas/{id}/siswa', [\App\Http\Controllers\Master\KelasController::class, 'getSiswa'])
+        ->name('master.kelas.siswa');
 
     // =========== SISWA ===========
-    Route::get('/siswa', [\App\Http\Controllers\SiswaController::class, 'index'])
-        ->name('siswa.index');
-    Route::post('/siswa/store', [\App\Http\Controllers\SiswaController::class, 'store'])
-        ->name('siswa.store');
-    Route::put('/siswa/{id}/update', [\App\Http\Controllers\SiswaController::class, 'update'])
-        ->name('siswa.update');
-    Route::delete('/siswa/{id}', [\App\Http\Controllers\SiswaController::class, 'destroy'])
-        ->name('siswa.destroy');
-    Route::get('/siswa/sekolah', [\App\Http\Controllers\SiswaController::class, 'sekolah'])
-        ->name('siswa.sekolah');
+    Route::get('master/siswa', [\App\Http\Controllers\Master\SiswaController::class, 'index'])
+        ->name('master.siswa.index');
+    Route::post('master/siswa/store', [\App\Http\Controllers\Master\SiswaController::class, 'store'])
+        ->name('master.siswa.store');
+    Route::put('master/siswa/{id}/update', [\App\Http\Controllers\Master\SiswaController::class, 'update'])
+        ->name('master.siswa.update');
+    Route::delete('master/siswa/{id}', [\App\Http\Controllers\Master\SiswaController::class, 'destroy'])
+        ->name('master.siswa.destroy');
+    Route::get('master/siswa/sekolah', [\App\Http\Controllers\Master\SiswaController::class, 'sekolah'])
+        ->name('master.siswa.sekolah');
+
+    // =========== SEMESTER ===========
+    Route::get('master/semesters', [\App\Http\Controllers\Master\SemesterController::class, 'index'])
+        ->name('master.semesters.index');
+
+    // =========== DATA KELAS ===========
+    Route::get('/data/kelas', [\App\Http\Controllers\Data\KelasController::class, 'index'])
+        ->name('data.kelas.index');
+    Route::get('/data/kelas/{id}/siswa', [\App\Http\Controllers\Data\KelasController::class, 'siswa'])
+        ->name('data.kelas.siswa');
+    Route::get('/data/kelas/options', [\App\Http\Controllers\Data\KelasController::class, 'options'])
+        ->name('data.kelas.options');
+    Route::get('/data/kelas/siswa-plotting', [\App\Http\Controllers\Data\KelasController::class, 'indexPlotting'])
+        ->name('data.kelas.indexPlotting');
+    Route::post('/data/kelas/transfer', [\App\Http\Controllers\Data\KelasController::class, 'transfer'])
+        ->name('data.kelas.transfer');
 });

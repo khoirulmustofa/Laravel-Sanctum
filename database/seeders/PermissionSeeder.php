@@ -64,6 +64,9 @@ class PermissionSeeder extends Seeder
             ['name' => 'Siswa Create', 'group' => 'Siswa'],
             ['name' => 'Siswa Edit', 'group' => 'Siswa'],
             ['name' => 'Siswa Delete', 'group' => 'Siswa'],
+
+             // ========== DATA KELAS ==========
+             ['name' => 'Data Kelas Index', 'group' => 'Data Kelas'],
         ];
 
         // 2. Lakukan Update atau Create

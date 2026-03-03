@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Master;
 
+use App\Http\Controllers\Controller;
+use App\Models\Semester;
 use App\Models\TahunAjaran;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -32,7 +34,7 @@ class TahunAjaranController extends Controller implements HasMiddleware
 
         if ($search) {
             $query->where(function ($q) use ($search) {
-                $q->where('nama', 'like', "%{$search}%");
+                $q->where('tahun_ajaran', 'like', "%{$search}%");
             });
         }
 
@@ -64,7 +66,7 @@ class TahunAjaranController extends Controller implements HasMiddleware
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama' => 'required|string',
+            'tahun_ajaran' => 'required|string',
             'tanggal_mulai' => 'required', // Hapus 'date' rule sementara jika masih konflik dengan format ISO
             'tanggal_selesai' => 'required',
             'aktif' => 'nullable|boolean',
@@ -91,7 +93,7 @@ class TahunAjaranController extends Controller implements HasMiddleware
         $tahunAjaran = TahunAjaran::findOrFail($id);
 
         $request->validate([
-            'nama' => 'required|string|unique:tahun_ajaran,nama,'.$tahunAjaran->id,
+            'tahun_ajaran' => 'required|string|unique:tahun_ajaran,tahun_ajaran,' . $tahunAjaran->id,
             'tanggal_mulai' => 'required',
             'tanggal_selesai' => 'required',
             'aktif' => 'nullable|boolean',
@@ -121,6 +123,20 @@ class TahunAjaranController extends Controller implements HasMiddleware
         return response()->json([
             'success' => true,
             'message' => 'Tahun Ajaran deleted successfully',
+        ]);
+    }
+
+    public function tahunAjaranActive(Request $request)
+    {
+        $activeTahun = TahunAjaran::where('aktif', true)->first();
+        $activeSemester = Semester::where('aktif', true)->first();
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'tahun_ajaran' => $activeTahun ? $activeTahun->tahun_ajaran : null,
+                'semester' => $activeSemester ? $activeSemester->semester : null,
+            ],
         ]);
     }
 }
