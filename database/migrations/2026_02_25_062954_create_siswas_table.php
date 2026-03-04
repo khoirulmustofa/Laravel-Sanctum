@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('siswa', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->foreignUuid('sekolah_id')->constrained('sekolah')->cascadeOnDelete()->nullable();
+            $table->foreignId('user_id')->nullable()->index();
+            $table->foreignUuid('sekolah_id')->nullable()->constrained('sekolah')->cascadeOnDelete();
 
             // Identitas peserta didik
             $table->string('nama_lengkap');

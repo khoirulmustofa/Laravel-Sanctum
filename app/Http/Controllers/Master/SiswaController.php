@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Master;
 use App\Http\Controllers\Controller;
 use App\Models\Sekolah;
 use App\Models\Siswa;
+use App\Models\OrangTua;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -33,9 +34,8 @@ class SiswaController extends Controller implements HasMiddleware
         $query = Siswa::query()
             ->select('siswa.*')
             ->leftJoin('sekolah', 'siswa.sekolah_id', '=', 'sekolah.id')
-            ->leftJoin('siswa_orang_tua', 'siswa.id', '=', 'siswa_orang_tua.siswa_id')
             ->leftJoin('siswa_alamat', 'siswa.id', '=', 'siswa_alamat.siswa_id')
-            ->with(['sekolah', 'alamat', 'orangTua']);
+            ->with(['sekolah', 'alamat', 'parents']);
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -45,9 +45,12 @@ class SiswaController extends Controller implements HasMiddleware
                     ->orWhere('siswa.nik', 'like', "%{$search}%")
                     ->orWhere('siswa.email_pribadi', 'like', "%{$search}%")
                     ->orWhere('sekolah.nama_sekolah', 'like', "%{$search}%")
-                    ->orWhere('siswa_orang_tua.nama_ayah', 'like', "%{$search}%")
-                    ->orWhere('siswa_orang_tua.nama_ibu', 'like', "%{$search}%")
-                    ->orWhere('siswa_alamat.alamat_tempat_tinggal', 'like', "%{$search}%");
+                    ->orWhere('siswa_alamat.alamat_tempat_tinggal', 'like', "%{$search}%")
+                    ->orWhereHas('parents', function ($pq) use ($search) {
+                        $pq->where('nama', 'like', "%{$search}%")
+                            ->orWhere('no_telepon', 'like', "%{$search}%")
+                            ->orWhere('email', 'like', "%{$search}%");
+                    });
             });
         }
 
@@ -62,12 +65,8 @@ class SiswaController extends Controller implements HasMiddleware
                     $query->orderBy('sekolah.nama_sekolah', $direction);
                 } elseif ($field === 'alamat.alamat_tempat_tinggal') {
                     $query->orderBy('siswa_alamat.alamat_tempat_tinggal', $direction);
-                } elseif ($field === 'orang_tua.nama_ayah') {
-                    $query->orderBy('siswa_orang_tua.nama_ayah', $direction);
-                } elseif ($field === 'orang_tua.nama_ibu') {
-                    $query->orderBy('siswa_orang_tua.nama_ibu', $direction);
                 } else {
-                    $query->orderBy('siswa.'.$field, $direction);
+                    $query->orderBy('siswa.' . $field, $direction);
                 }
             }
         } else {
@@ -114,37 +113,48 @@ class SiswaController extends Controller implements HasMiddleware
             'alamat.kabupaten_kota' => 'nullable|string',
             'alamat.provinsi' => 'nullable|string',
 
-            // Orang Tua validation
-            'orang_tua' => 'nullable|array',
-            'orang_tua.nama_ayah' => 'nullable|string',
-            'orang_tua.pekerjaan_ayah' => 'nullable|string',
-            'orang_tua.pendidikan_ayah' => 'nullable|string',
-            'orang_tua.penghasilan_ayah' => 'nullable|numeric',
-            'orang_tua.nama_ibu' => 'nullable|string',
-            'orang_tua.pekerjaan_ibu' => 'nullable|string',
-            'orang_tua.pendidikan_ibu' => 'nullable|string',
-            'orang_tua.penghasilan_ibu' => 'nullable|numeric',
-            'orang_tua.nama_wali' => 'nullable|string',
-            'orang_tua.pekerjaan_wali' => 'nullable|string',
-            'orang_tua.pendidikan_wali' => 'nullable|string',
-            'orang_tua.penghasilan_wali' => 'nullable|numeric',
+            // Parents validation
+            'parents' => 'nullable|array',
+            'parents.*.id' => 'nullable|uuid',
+            'parents.*.nama' => 'required|string',
+            'parents.*.jenis_kelamin' => 'required|in:L,P',
+            'parents.*.pekerjaan' => 'nullable|string',
+            'parents.*.pendidikan' => 'nullable|string',
+            'parents.*.penghasilan' => 'nullable|numeric',
+            'parents.*.no_telepon' => 'nullable|string',
+            'parents.*.email' => 'nullable|email',
+            'parents.*.alamat' => 'nullable|string',
+            'parents.*.hubungan' => 'required|string',
+            'parents.*.kontak_utama' => 'nullable|boolean',
         ]);
 
         return DB::transaction(function () use ($validated) {
-            $siswa = Siswa::create(collect($validated)->except(['alamat', 'orang_tua'])->toArray());
+            $siswa = Siswa::create(collect($validated)->except(['alamat', 'parents'])->toArray());
 
             if (! empty($validated['alamat'])) {
                 $siswa->alamat()->create($validated['alamat']);
             }
 
-            if (! empty($validated['orang_tua'])) {
-                $siswa->orangTua()->create($validated['orang_tua']);
+            if (! empty($validated['parents'])) {
+                $syncData = [];
+                foreach ($validated['parents'] as $parentData) {
+                    $parent = OrangTua::updateOrCreate(
+                        ['email' => $parentData['email'] ?? null, 'nama' => $parentData['nama']],
+                        collect($parentData)->except(['hubungan', 'kontak_utama', 'id'])->toArray()
+                    );
+                    $syncData[$parent->id] = [
+                        'id' => \Illuminate\Support\Str::uuid(),
+                        'hubungan' => $parentData['hubungan'],
+                        'kontak_utama' => $parentData['kontak_utama'] ?? false,
+                    ];
+                }
+                $siswa->parents()->sync($syncData);
             }
 
             return response()->json([
                 'success' => true,
                 'message' => 'Siswa created successfully',
-                'data' => $siswa->load(['alamat', 'orangTua']),
+                'data' => $siswa->load(['alamat', 'parents']),
             ]);
         });
     }
@@ -157,7 +167,7 @@ class SiswaController extends Controller implements HasMiddleware
             'sekolah_id' => 'nullable|exists:sekolah,id',
             'nama_lengkap' => 'required|string',
             'jenis_kelamin' => 'required|in:L,P',
-            'nisn' => 'nullable|string|unique:siswa,nisn,'.$id,
+            'nisn' => 'nullable|string|unique:siswa,nisn,' . $id,
             'nik' => 'nullable|string',
             'tempat_lahir' => 'nullable|string',
             'tanggal_lahir' => 'nullable|date',
@@ -178,37 +188,48 @@ class SiswaController extends Controller implements HasMiddleware
             'alamat.kabupaten_kota' => 'nullable|string',
             'alamat.provinsi' => 'nullable|string',
 
-            // Orang Tua validation
-            'orang_tua' => 'nullable|array',
-            'orang_tua.nama_ayah' => 'nullable|string',
-            'orang_tua.pekerjaan_ayah' => 'nullable|string',
-            'orang_tua.pendidikan_ayah' => 'nullable|string',
-            'orang_tua.penghasilan_ayah' => 'nullable|numeric',
-            'orang_tua.nama_ibu' => 'nullable|string',
-            'orang_tua.pekerjaan_ibu' => 'nullable|string',
-            'orang_tua.pendidikan_ibu' => 'nullable|string',
-            'orang_tua.penghasilan_ibu' => 'nullable|numeric',
-            'orang_tua.nama_wali' => 'nullable|string',
-            'orang_tua.pekerjaan_wali' => 'nullable|string',
-            'orang_tua.pendidikan_wali' => 'nullable|string',
-            'orang_tua.penghasilan_wali' => 'nullable|numeric',
+            // Parents validation
+            'parents' => 'nullable|array',
+            'parents.*.id' => 'nullable|uuid',
+            'parents.*.nama' => 'required|string',
+            'parents.*.jenis_kelamin' => 'required|in:L,P',
+            'parents.*.pekerjaan' => 'nullable|string',
+            'parents.*.pendidikan' => 'nullable|string',
+            'parents.*.penghasilan' => 'nullable|numeric',
+            'parents.*.no_telepon' => 'nullable|string',
+            'parents.*.email' => 'nullable|email',
+            'parents.*.alamat' => 'nullable|string',
+            'parents.*.hubungan' => 'required|string',
+            'parents.*.kontak_utama' => 'nullable|boolean',
         ]);
 
         return DB::transaction(function () use ($siswa, $validated) {
-            $siswa->update(collect($validated)->except(['alamat', 'orang_tua'])->toArray());
+            $siswa->update(collect($validated)->except(['alamat', 'parents'])->toArray());
 
             if (isset($validated['alamat'])) {
                 $siswa->alamat()->updateOrCreate(['siswa_id' => $siswa->id], $validated['alamat']);
             }
 
-            if (isset($validated['orang_tua'])) {
-                $siswa->orangTua()->updateOrCreate(['siswa_id' => $siswa->id], $validated['orang_tua']);
+            if (isset($validated['parents'])) {
+                $syncData = [];
+                foreach ($validated['parents'] as $parentData) {
+                    $parent = OrangTua::updateOrCreate(
+                        ['email' => $parentData['email'] ?? null, 'nama' => $parentData['nama']],
+                        collect($parentData)->except(['hubungan', 'kontak_utama', 'id'])->toArray()
+                    );
+                    $syncData[$parent->id] = [
+                        'id' => \Illuminate\Support\Str::uuid(),
+                        'hubungan' => $parentData['hubungan'],
+                        'kontak_utama' => $parentData['kontak_utama'] ?? false,
+                    ];
+                }
+                $siswa->parents()->sync($syncData);
             }
 
             return response()->json([
                 'success' => true,
                 'message' => 'Siswa updated successfully',
-                'data' => $siswa->load(['alamat', 'orangTua']),
+                'data' => $siswa->load(['alamat', 'parents']),
             ]);
         });
     }

@@ -45,7 +45,7 @@ class KelasController extends Controller implements HasMiddleware
                 $query->orderBy($field, $direction);
             }
         } else {
-            $query->orderBy('created_at', 'desc');
+            $query->orderBy('nama', 'asc');
         }
 
         $kelas = $query->paginate($limit, ['*'], 'page', $page);

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('push_notifications', function (Blueprint $table) {
             $table->id();
             // Relasi ke user
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->index();
 
             // Konten Notifikasi
             $table->string('title');

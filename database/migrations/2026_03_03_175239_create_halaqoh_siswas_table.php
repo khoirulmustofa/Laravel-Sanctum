@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('siswa_kelas', function (Blueprint $table) {
+        Schema::create('halaqoh_siswa', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('halaqoh_id')->nullable()->constrained('halaqoh')->cascadeOnDelete();
             $table->foreignUuid('siswa_id')->nullable()->constrained('siswa')->cascadeOnDelete();
-            $table->foreignUuid('kelas_id')->nullable()->constrained('kelas')->cascadeOnDelete();
-            $table->string('tahun_ajaran');
-            $table->integer('semester');
-            $table->boolean('aktif')->default(false);
+            $table->string('tahun_ajaran')->nullable();
+            $table->integer('semester')->nullable();
+            $table->boolean('aktif')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('siswa_kelas');
+        Schema::dropIfExists('halaqoh_siswa');
     }
 };

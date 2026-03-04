@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
 
             SiswaSeeder::class,
             SiswaAlamatSeeder::class,
+            OrangTuaSeeder::class,
             SiswaOrangTuaSeeder::class,
             SiswaKelasSeeder::class,
         ]);

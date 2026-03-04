@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SiswaOrangTua extends Model
+class SiswaOrangTua extends Pivot // Ubah ke Pivot
 {
+
     use HasUuids;
     use SoftDeletes;
 
@@ -17,12 +18,20 @@ class SiswaOrangTua extends Model
 
     public $incrementing = false;
 
+    protected $keyType = 'string';
+
     protected $guarded = [];
 
 
-
+    // Relasi ke Siswa
     public function siswa()
     {
-        return $this->belongsTo(Siswa::class);
+        return $this->belongsTo(Siswa::class, 'siswa_id');
+    }
+
+    // Relasi ke Orang Tua
+    public function orangTua()
+    {
+        return $this->belongsTo(OrangTua::class, 'orang_tua_id');
     }
 }

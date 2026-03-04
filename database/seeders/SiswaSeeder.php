@@ -60,6 +60,7 @@ class SiswaSeeder extends Seeder
                     'nisn' => $nisn, // key pencarian unik
                 ],
                 [
+                    'user_id' => null, // bisa diisi jika ingin langsung buat akun
                     'nama_lengkap' => $namaLengkap,
                     'jenis_kelamin' => $jk,
                     'nis' => $nis,

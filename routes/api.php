@@ -119,4 +119,16 @@ Route::middleware([''])->group(function () {
         ->name('data.kelas.indexPlotting');
     Route::post('/data/kelas/transfer', [\App\Http\Controllers\Data\KelasController::class, 'transfer'])
         ->name('data.kelas.transfer');
+
+    // =========== MASTER ORANG TUA ===========
+    Route::get('master/orang-tua', [\App\Http\Controllers\Master\OrangTuaController::class, 'index'])
+        ->name('master.orang-tua.index');
+    Route::get('master/orang-tua/search', [\App\Http\Controllers\Master\OrangTuaController::class, 'search'])
+        ->name('master.orang-tua.search');
+    Route::post('master/orang-tua/store', [\App\Http\Controllers\Master\OrangTuaController::class, 'store'])
+        ->name('master.orang-tua.store');
+    Route::put('master/orang-tua/{id}/update', [\App\Http\Controllers\Master\OrangTuaController::class, 'update'])
+        ->name('master.orang-tua.update');
+    Route::delete('master/orang-tua/{id}', [\App\Http\Controllers\Master\OrangTuaController::class, 'destroy'])
+        ->name('master.orang-tua.destroy');
 });

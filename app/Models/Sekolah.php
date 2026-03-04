@@ -21,6 +21,13 @@ class Sekolah extends Model
 
 
 
+    /**
+     * Relasi one-to-many dengan model Siswa.
+     *
+     * Mengembalikan informasi tentang siswa yang terdaftar di sekolah.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function siswa()
     {
         return $this->hasMany(Siswa::class);
