@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('orang_tua', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user_id')->nullable()->constrained('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->index();
             $table->string('nama');
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->string('pekerjaan')->nullable();
