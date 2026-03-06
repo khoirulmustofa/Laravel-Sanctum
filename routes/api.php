@@ -3,6 +3,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
+// Public Mobile Routes
+Route::post('/register', [\App\Http\Controllers\Api\AuthController::class, 'register']);
+Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
+
+
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return response()->json([
         'success' => true,
@@ -15,7 +21,13 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 Route::post('/send-notif', [\App\Http\Controllers\TestNotifController::class, 'sendDirect']);
 
-Route::middleware([''])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::get('/me', [\App\Http\Controllers\Api\AuthController::class, 'me']);
+    Route::post('/update-fcm-token', [\App\Http\Controllers\Api\AuthController::class, 'updateFcmToken']);
+    Route::post('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
+
+
     // =========== DASHBOARD ===========
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
         ->name('dashboard.index');
