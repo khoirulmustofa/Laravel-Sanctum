@@ -12,11 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         channels: __DIR__.'/../routes/channels.php',
         health: '/up',
-        then: function () {
-            Route::middleware('api')
-                ->prefix('api/mobile') // URL akan menjadi: domain.com/api/mobile/...
-                ->name('mobile.')      // Nama route menjadi: mobile.login, dsb.
-                ->group(__DIR__.'/../routes/mobile.php');
+        then: function () {           
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {

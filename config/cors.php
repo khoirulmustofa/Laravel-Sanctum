@@ -13,6 +13,7 @@ return [
         'http://localhost:8100',
         'http://127.0.0.1:8100',
         'https://service.nfbs-bogor.sch.id',
+        'https://e6c4-180-243-122-114.ngrok-free.app',
 
         // --- TAMBAHKAN BARIS DI BAWAH INI ---
         'http://localhost',

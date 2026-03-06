@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         SERVER_USER  = 'nfbsb'
-        SERVER_HOST  = '192.168.100.125'
+        SERVER_HOST  = '192.168.100.222'
         PROJECT_PATH = '/home/nfbsb/php/backend_app'
         GIT_REPO     = 'git@github.com:khoirulmustofa/Laravel-Sanctum.git'
     }
