@@ -27,6 +27,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/update-fcm-token', [\App\Http\Controllers\Api\AuthController::class, 'updateFcmToken']);
     Route::post('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
 
+    // =========== PROFILE ===========
+    Route::post('/profile/update', [\App\Http\Controllers\ProfileController::class, 'update']);
+    Route::post('/profile/update-photo', [\App\Http\Controllers\ProfileController::class, 'updatePhoto']);
+
 
     // =========== DASHBOARD ===========
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])

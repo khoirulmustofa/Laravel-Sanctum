@@ -28,7 +28,12 @@ class User extends Authenticatable
         'email',
         'password',
         'fcm_token',
+        'phone',
+        'address',
+        'photo',
     ];
+
+    protected $appends = ['photo_url'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -75,4 +80,15 @@ class User extends Authenticatable
      {
         return $this->hasMany(Halaqoh::class, 'user_id');
      }
+
+    /**
+     * Accessor: URL lengkap foto profil
+     */
+    public function getPhotoUrlAttribute()
+    {
+        if ($this->photo) {
+            return asset('storage/' . $this->photo);
+        }
+        return null;
+    }
 }
