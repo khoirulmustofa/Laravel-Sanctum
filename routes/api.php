@@ -138,13 +138,23 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // =========== MASTER ORANG TUA ===========
     Route::get('master/orang-tua', [\App\Http\Controllers\Master\OrangTuaController::class, 'index'])
-        ->name('master.orang-tua.index');
+        ->name('master.orang_tua.index');
     Route::get('master/orang-tua/search', [\App\Http\Controllers\Master\OrangTuaController::class, 'search'])
-        ->name('master.orang-tua.search');
+        ->name('master.orang_tua.search');
     Route::post('master/orang-tua/store', [\App\Http\Controllers\Master\OrangTuaController::class, 'store'])
-        ->name('master.orang-tua.store');
+        ->name('master.orang_tua.store');
     Route::put('master/orang-tua/{id}/update', [\App\Http\Controllers\Master\OrangTuaController::class, 'update'])
-        ->name('master.orang-tua.update');
+        ->name('master.orang_tua.update');
     Route::delete('master/orang-tua/{id}', [\App\Http\Controllers\Master\OrangTuaController::class, 'destroy'])
-        ->name('master.orang-tua.destroy');
+        ->name('master.orang_tua.destroy');
+
+    // =========== MASTER AL QURAN ===========
+    Route::get('master/quran/surah', [\App\Http\Controllers\Master\QuranController::class, 'surah'])
+        ->name('master.quran.surah');
+    Route::get('master/quran/surah/{nomor}', [\App\Http\Controllers\Master\QuranController::class, 'surahDetail'])
+        ->name('master.quran.surahDetail');
+    Route::post('master/quran/bookmark', [\App\Http\Controllers\Master\QuranController::class, 'storeBookmark'])
+        ->name('master.quran.storeBookmark');
+    Route::delete('master/quran/bookmark/{id}', [\App\Http\Controllers\Master\QuranController::class, 'destroyBookmark'])
+        ->name('master.quran.destroyBookmark');
 });
