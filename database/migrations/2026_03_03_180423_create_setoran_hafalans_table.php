@@ -16,9 +16,9 @@ return new class extends Migration
             $table->date('tanggal');
             $table->foreignUuid('halaqoh_id')->nullable()->constrained('halaqoh')->cascadeOnDelete();
             $table->foreignUuid('siswa_id')->nullable()->constrained('siswa')->cascadeOnDelete();
-            $table->integer('surah')->nullable();
-            $table->integer('ayat_awal')->nullable();
-            $table->integer('ayat_akhir')->nullable();
+            $table->unsignedInteger('surah')->nullable();
+            $table->unsignedInteger('ayat_awal')->nullable();
+            $table->unsignedInteger('ayat_akhir')->nullable();
             $table->integer('tajwid')->nullable();
             $table->integer('makhraj')->nullable();
             $table->integer('kelancaran')->nullable();
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('surah')->references('nomor')->on('quran_surah')->cascadeOnDelete();
+            $table->foreign('surah')->references('number')->on('quran_surah')->cascadeOnDelete();
         });
     }
 

@@ -73,13 +73,21 @@ class PermissionSeeder extends Seeder
             ['name' => 'Orang Tua Create', 'group' => 'Orang Tua'],
             ['name' => 'Orang Tua Edit', 'group' => 'Orang Tua'],
             ['name' => 'Orang Tua Delete', 'group' => 'Orang Tua'],
+
+            // ========== QURAN ==========
+            ['name' => 'Quran Reading', 'group' => 'Quran'],
         ];
 
         // 2. Lakukan Update atau Create
         foreach ($permissions as $permission) {
             Permission::updateOrCreate(
-                ['name' => $permission['name']],
-                ['group' => $permission['group']]
+                [
+                    'name' => $permission['name'],
+                ],
+                [
+                    'guard_name' => 'web',
+                    'group' => $permission['group']
+                ]
             );
         }
 

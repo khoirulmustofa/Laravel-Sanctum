@@ -8,7 +8,7 @@ class QuranSurah extends Model
 {
     protected $table = 'quran_surah';
 
-    protected $primaryKey = 'nomor';
+    protected $primaryKey = 'number';
 
     public $incrementing = false;
 
@@ -17,13 +17,13 @@ class QuranSurah extends Model
     // Define relationship with QuranAyat
     public function ayats()
     {
-        return $this->hasMany(QuranAyat::class, 'surah', 'nomor');
+        return $this->hasMany(QuranAyat::class, 'surah', 'number')->orderBy('ayah', 'asc');
     }
 
 
     // Define relationship with SetoranHafalan
     public function setoran()
     {
-        return $this->hasMany(SetoranHafalan::class, 'surah', 'nomor');
+        return $this->hasMany(SetoranHafalan::class, 'surah', 'number');
     }
 }

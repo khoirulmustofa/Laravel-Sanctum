@@ -18,6 +18,6 @@ class QuranAyat extends Model
     // Define relationship with QuranSurah
     public function surah()
     {
-        return $this->belongsTo(QuranSurah::class, 'surah', 'nomor');
+        return $this->belongsTo(QuranSurah::class, 'surah', 'number');
     }
 }

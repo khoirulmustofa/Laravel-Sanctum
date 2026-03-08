@@ -151,10 +151,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // =========== MASTER AL QURAN ===========
     Route::get('master/quran/surah', [\App\Http\Controllers\Master\QuranController::class, 'surah'])
         ->name('master.quran.surah');
-    Route::get('master/quran/surah/{nomor}', [\App\Http\Controllers\Master\QuranController::class, 'surahDetail'])
+    Route::get('master/quran/surah/{number}', [\App\Http\Controllers\Master\QuranController::class, 'surahDetail'])
         ->name('master.quran.surahDetail');
-    Route::post('master/quran/bookmark', [\App\Http\Controllers\Master\QuranController::class, 'storeBookmark'])
+    Route::get('master/quran/bookmark', [\App\Http\Controllers\Master\QuranController::class, 'listBookmarks'])
+        ->name('master.quran.listBookmarks');
+    Route::post('master/quran/bookmark/store', [\App\Http\Controllers\Master\QuranController::class, 'storeBookmark'])
         ->name('master.quran.storeBookmark');
-    Route::delete('master/quran/bookmark/{id}', [\App\Http\Controllers\Master\QuranController::class, 'destroyBookmark'])
+    Route::delete('master/quran/bookmark/{id}/delete', [\App\Http\Controllers\Master\QuranController::class, 'destroyBookmark'])
         ->name('master.quran.destroyBookmark');
 });

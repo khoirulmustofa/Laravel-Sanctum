@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use Database\Seeders\PermissionSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller implements HasMiddleware
 {
@@ -88,7 +88,7 @@ class RoleController extends Controller implements HasMiddleware
         $role = Role::findOrFail($id);
 
         $request->validate([
-            'name' => 'required|unique:roles,name,'.$id,
+            'name' => 'required|unique:roles,name,' . $id,
         ]);
 
         $role->update([
@@ -188,7 +188,7 @@ class RoleController extends Controller implements HasMiddleware
                 ]);
             }
         } catch (\Exception $e) {
-            Log::error('Error assigning permission: '.$e->getMessage());
+            Log::error('Error assigning permission: ' . $e->getMessage());
 
             return response()->json([
                 'success' => false,
@@ -273,12 +273,15 @@ class RoleController extends Controller implements HasMiddleware
     public function permissionSeeder()
     {
         try {
-            // Opsi 1: Memanggil Class langsung
+            // Reset cached permissions to avoid stale cache issues
+            app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+            // Memanggil Class langsung
             $seeder = new PermissionSeeder;
             $seeder->run();
 
-            // Opsi 2: Menggunakan Artisan Command (Lebih bersih jika seeder kompleks)
-            // Artisan::call('db:seed', ['--class' => 'PermissionSeeder']);
+            // Reset cache again after seeder completes
+            app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
             return response()->json([
                 'success' => true,
@@ -288,7 +291,7 @@ class RoleController extends Controller implements HasMiddleware
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Error running seeder: '.$e->getMessage(),
+                'message' => 'Error running seeder: ' . $e->getMessage(),
             ], 500);
         }
     }

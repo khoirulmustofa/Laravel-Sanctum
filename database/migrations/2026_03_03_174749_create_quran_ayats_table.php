@@ -12,14 +12,34 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('quran_ayat', function (Blueprint $table) {
+
             $table->id();
-            $table->integer('surah');
-            $table->integer('nomor')->nullable()->index();
-            $table->text('ar');
-            $table->text('tr');
-            $table->text('idn');
+
+            $table->unsignedInteger('surah');
+            $table->unsignedInteger('ayah');
+
+            $table->text('arab');
+            $table->text('latin');
+
+            $table->unsignedInteger('page');
+            $table->unsignedInteger('juz');
+
+            $table->decimal('hizb', 4, 1)->nullable();
+
+            $table->unsignedInteger('asbab')->default(0);
+
+            $table->string('audio')->nullable();
+            $table->string('theme')->nullable();
+
+            $table->text('text')->nullable();
+            $table->text('notes')->nullable();
+
             $table->timestamps();
-            $table->foreign('surah')->references('nomor')->on('quran_surah')->cascadeOnDelete();
+
+            $table->foreign('surah')
+                ->references('number')
+                ->on('quran_surah')
+                ->cascadeOnDelete();
         });
     }
 
