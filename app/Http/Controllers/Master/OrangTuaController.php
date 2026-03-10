@@ -13,7 +13,7 @@ class OrangTuaController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:Orang Tua Index', only: ['index']),
+            new Middleware('permission:Orang Tua View', only: ['index']),
             new Middleware('permission:Orang Tua Create', only: ['store']),
             new Middleware('permission:Orang Tua Edit', only: ['update']),
             new Middleware('permission:Orang Tua Delete', only: ['destroy']),

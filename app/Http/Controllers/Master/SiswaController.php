@@ -16,7 +16,7 @@ class SiswaController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:Siswa Index', only: ['index']),
+            new Middleware('permission:Siswa View', only: ['index']),
             new Middleware('permission:Siswa Create', only: ['store']),
             new Middleware('permission:Siswa Edit', only: ['update']),
             new Middleware('permission:Siswa Delete', only: ['destroy']),

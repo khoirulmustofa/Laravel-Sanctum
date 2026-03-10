@@ -10,7 +10,7 @@ class DashboardController extends Controller
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:Dashboard Index', only: ['index']),
+            new Middleware('permission:Dashboard View', only: ['index']),
         ];
     }
 

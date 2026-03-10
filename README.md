@@ -22,3 +22,10 @@ php artisan migrate --path=/database/migrations/2026_03_07_135205_create_quran_b
 php artisan migrate:refresh --path=/database/migrations/2026_03_07_135205_create_quran_bookmarks_table.php
 
 php artisan migrate:refresh --seed
+
+php artisan make:controller
+
+
+\\wsl.localhost\Debian\home\nfbs\php\Laravel-Sanctum\app\Http\Controllers/Controllers/Data/HalaqohController.php
+
+app/Http/Controllers/Data/HalaqohController.php

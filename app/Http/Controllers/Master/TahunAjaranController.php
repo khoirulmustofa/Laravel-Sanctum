@@ -15,7 +15,7 @@ class TahunAjaranController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:Tahun Ajaran Index', only: ['index']),
+            new Middleware('permission:Tahun Ajaran View', only: ['index','tahunAjaran']),
             new Middleware('permission:Tahun Ajaran Create', only: ['store']),
             new Middleware('permission:Tahun Ajaran Edit', only: ['update']),
             new Middleware('permission:Tahun Ajaran Delete', only: ['destroy']),
@@ -139,4 +139,18 @@ class TahunAjaranController extends Controller implements HasMiddleware
             ],
         ]);
     }
-}
+
+    public function tahunAjaran(Request $request)
+    {
+        $tahunjarans = TahunAjaran::all();
+        $semesters = Semester::all();
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'tahun_ajaran' => $tahunjarans,
+                'semester' => $semesters,
+            ],
+        ]);
+    }
+}   

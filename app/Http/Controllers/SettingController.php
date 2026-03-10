@@ -11,7 +11,7 @@ class SettingController extends Controller
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:Setting Index', only: ['index']),
+            new Middleware('permission:Setting View', only: ['index']),
             new Middleware('permission:Setting Edit', only: ['update']),
         ];
     }
@@ -43,7 +43,7 @@ class SettingController extends Controller
 
             // 1. Buat nama file baru: setting_1708310000.jpg
             $extension = $file->getClientOriginalExtension();
-            $fileName = 'setting_'.time().'.'.$extension;
+            $fileName = 'setting_' . time() . '.' . $extension;
 
             // 2. Simpan ke folder 'uploads/settings' di dalam disk 'public'
             // Ini akan tersimpan di: storage/app/public/uploads/settings

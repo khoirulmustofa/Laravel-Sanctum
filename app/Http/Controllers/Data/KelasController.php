@@ -4,16 +4,21 @@ namespace App\Http\Controllers\Data;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
+use App\Models\SiswaKelas;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Validation\Rule;
 
 class KelasController extends Controller implements HasMiddleware
 {
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:Data Kelas Index', only: ['index']),
+            new Middleware('permission:Data Kelas View', only: ['index']),
+            // new Middleware('permission:Data Kelas Create', only: ['store']),
+            // new Middleware('permission:Data Kelas Edit', only: ['update']),
+            // new Middleware('permission:Data Kelas Delete', only: ['destroy']),
         ];
     }
 
@@ -26,7 +31,10 @@ class KelasController extends Controller implements HasMiddleware
         $sortOrders = $request->input('order');
 
 
-        $query = Kelas::withCount('siswa_kelas');
+        $query = Kelas::withCount(['siswa_kelas' => function ($query) use ($request) {
+            $query->where('tahun_ajaran', $request->tahun_ajaran)
+                ->where('semester', $request->semester);
+        }]);
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -58,6 +66,62 @@ class KelasController extends Controller implements HasMiddleware
                 'current_page' => $kelas->currentPage(),
                 'last_page' => $kelas->lastPage(),
             ],
+        ]);
+    }
+
+    /**
+     * Menyimpan data Kelas baru (Store)
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'nama'    => 'required|string|max:255',
+            'paralel' => 'nullable|string|max:50',
+            'tipe'    => 'nullable|string|max:50',
+        ]);
+
+        $kelas = Kelas::create($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Kelas berhasil dibuat',
+            'data'    => $kelas,
+        ]);
+    }
+
+    /**
+     * Memperbarui data Kelas (Update)
+     */
+    public function update(Request $request, $id)
+    {
+        $kelas = Kelas::findOrFail($id);
+
+        $validated = $request->validate([
+            'nama'    => 'required|string|max:255',
+            'paralel' => 'nullable|string|max:50',
+            'tipe'    => 'nullable|string|max:50',
+        ]);
+
+        $kelas->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Kelas berhasil diperbarui',
+            'data'    => $kelas,
+        ]);
+    }
+
+    /**
+     * Menghapus data Kelas (Soft Delete)
+     */
+    public function destroy($id)
+    {
+        $kelas = Kelas::findOrFail($id);
+        $kelas->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Kelas berhasil dihapus',
         ]);
     }
 

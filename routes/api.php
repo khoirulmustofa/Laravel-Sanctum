@@ -95,6 +95,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         ->name('master.tahun-ajaran.destroy');
     Route::get('master/tahun-ajaran/active', [\App\Http\Controllers\Master\TahunAjaranController::class, 'tahunAjaranActive'])
         ->name('master.tahun-ajaran.active');
+    Route::get('master/tahun-ajaran/tahun-ajaran', [\App\Http\Controllers\Master\TahunAjaranController::class, 'tahunAjaran'])
+        ->name('master.tahun-ajaran.tahunAjaran');
 
     // =========== KELAS ===========
     Route::get('master/kelas', [\App\Http\Controllers\Master\KelasController::class, 'index'])
@@ -124,18 +126,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('master/semesters', [\App\Http\Controllers\Master\SemesterController::class, 'index'])
         ->name('master.semesters.index');
 
-    // =========== DATA KELAS ===========
-    Route::get('/data/kelas', [\App\Http\Controllers\Data\KelasController::class, 'index'])
-        ->name('data.kelas.index');
-    Route::get('/data/kelas/{id}/siswa', [\App\Http\Controllers\Data\KelasController::class, 'siswa'])
-        ->name('data.kelas.siswa');
-    Route::get('/data/kelas/options', [\App\Http\Controllers\Data\KelasController::class, 'options'])
-        ->name('data.kelas.options');
-    Route::get('/data/kelas/siswa-plotting', [\App\Http\Controllers\Data\KelasController::class, 'indexPlotting'])
-        ->name('data.kelas.indexPlotting');
-    Route::post('/data/kelas/transfer', [\App\Http\Controllers\Data\KelasController::class, 'transfer'])
-        ->name('data.kelas.transfer');
-
     // =========== MASTER ORANG TUA ===========
     Route::get('master/orang-tua', [\App\Http\Controllers\Master\OrangTuaController::class, 'index'])
         ->name('master.orang_tua.index');
@@ -159,4 +149,38 @@ Route::middleware(['auth:sanctum'])->group(function () {
         ->name('master.quran.storeBookmark');
     Route::delete('master/quran/bookmark/{id}/delete', [\App\Http\Controllers\Master\QuranController::class, 'destroyBookmark'])
         ->name('master.quran.destroyBookmark');
+
+    // =========== DATA KELAS ===========
+    Route::get('/data/kelas', [\App\Http\Controllers\Data\KelasController::class, 'index'])
+        ->name('data.kelas.index');
+    Route::post('data/kelas/store', [\App\Http\Controllers\Data\KelasController::class, 'store'])
+        ->name('data.kelas.store');
+    Route::put('data/kelas/{id}/update', [\App\Http\Controllers\Data\KelasController::class, 'update'])
+        ->name('data.kelas.update');
+    Route::delete('data/kelas/{id}', [\App\Http\Controllers\Data\KelasController::class, 'destroy'])
+        ->name('data.kelas.destroy');
+    Route::get('/data/kelas/{id}/siswa', [\App\Http\Controllers\Data\KelasController::class, 'siswa'])
+        ->name('data.kelas.siswa');
+    Route::get('/data/kelas/options', [\App\Http\Controllers\Data\KelasController::class, 'options'])
+        ->name('data.kelas.options');
+    Route::get('/data/kelas/siswa-plotting', [\App\Http\Controllers\Data\KelasController::class, 'indexPlotting'])
+        ->name('data.kelas.indexPlotting');
+    Route::post('/data/kelas/transfer', [\App\Http\Controllers\Data\KelasController::class, 'transfer'])
+        ->name('data.kelas.transfer');
+
+    // =========== DATA HALAQOH ===========
+    Route::get('data/halaqoh', [\App\Http\Controllers\Data\HalaqohController::class, 'index'])
+        ->name('data.halaqoh.index');
+    Route::get('data/halaqoh/options', [\App\Http\Controllers\Data\HalaqohController::class, 'options'])
+        ->name('data.halaqoh.options');
+    Route::post('data/halaqoh/store', [\App\Http\Controllers\Data\HalaqohController::class, 'store'])
+        ->name('data.halaqoh.store');
+    Route::put('data/halaqoh/{id}/update', [\App\Http\Controllers\Data\HalaqohController::class, 'update'])
+        ->name('data.halaqoh.update');
+    Route::delete('data/halaqoh/{id}', [\App\Http\Controllers\Data\HalaqohController::class, 'destroy'])
+        ->name('data.halaqoh.destroy');
+    Route::get('data/halaqoh/siswa-ploting', [\App\Http\Controllers\Data\HalaqohController::class, 'indexPlotting'])
+        ->name('data.halaqoh.indexPlotting');
+    Route::post('data/halaqoh/transfer', [\App\Http\Controllers\Data\HalaqohController::class, 'transfer'])
+        ->name('data.halaqoh.transfer');
 });

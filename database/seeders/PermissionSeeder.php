@@ -16,13 +16,13 @@ class PermissionSeeder extends Seeder
 
         $permissions = [
             // ========== DASHBOARD ==========
-            ['name' => 'Dashboard Index', 'group' => 'Dashboard'],
+            ['name' => 'Dashboard View', 'group' => 'Dashboard'],
 
             // ========== MASTER ==========
-            ['name' => 'Master Index', 'group' => 'Master'],
+            ['name' => 'Master View', 'group' => 'Master'],
 
             // ========== USER ==========
-            ['name' => 'User Index', 'group' => 'User'],
+            ['name' => 'User View', 'group' => 'User'],
             ['name' => 'User Create', 'group' => 'User'],
             ['name' => 'User Edit', 'group' => 'User'],
             ['name' => 'User Delete', 'group' => 'User'],
@@ -30,7 +30,7 @@ class PermissionSeeder extends Seeder
             ['name' => 'User Assign Permission', 'group' => 'User'],
 
             // ========== ROLE ==========
-            ['name' => 'Role Index', 'group' => 'Role'],
+            ['name' => 'Role View', 'group' => 'Role'],
             ['name' => 'Role Create', 'group' => 'Role'],
             ['name' => 'Role Edit', 'group' => 'Role'],
             ['name' => 'Role Delete', 'group' => 'Role'],
@@ -38,44 +38,50 @@ class PermissionSeeder extends Seeder
             ['name' => 'Role Assign Permission', 'group' => 'Role'],
 
             // ========== SETTING ==========
-            ['name' => 'Setting Index', 'group' => 'Setting'],
+            ['name' => 'Setting View', 'group' => 'Setting'],
             ['name' => 'Setting Edit', 'group' => 'Setting'],
 
             // ========== SEKOLAH ==========
-            ['name' => 'Sekolah Index', 'group' => 'Sekolah'],
+            ['name' => 'Sekolah View', 'group' => 'Sekolah'],
             ['name' => 'Sekolah Create', 'group' => 'Sekolah'],
             ['name' => 'Sekolah Edit', 'group' => 'Sekolah'],
             ['name' => 'Sekolah Delete', 'group' => 'Sekolah'],
 
             // ========== TAHUN AJARAN ==========
-            ['name' => 'Tahun Ajaran Index', 'group' => 'Tahun Ajaran'],
+            ['name' => 'Tahun Ajaran View', 'group' => 'Tahun Ajaran'],
             ['name' => 'Tahun Ajaran Create', 'group' => 'Tahun Ajaran'],
             ['name' => 'Tahun Ajaran Edit', 'group' => 'Tahun Ajaran'],
             ['name' => 'Tahun Ajaran Delete', 'group' => 'Tahun Ajaran'],
 
             // ========== KELAS ==========
-            ['name' => 'Kelas Index', 'group' => 'Kelas'],
+            ['name' => 'Kelas View', 'group' => 'Kelas'],
             ['name' => 'Kelas Create', 'group' => 'Kelas'],
             ['name' => 'Kelas Edit', 'group' => 'Kelas'],
             ['name' => 'Kelas Delete', 'group' => 'Kelas'],
 
             // ========== SISWA ==========
-            ['name' => 'Siswa Index', 'group' => 'Siswa'],
+            ['name' => 'Siswa View', 'group' => 'Siswa'],
             ['name' => 'Siswa Create', 'group' => 'Siswa'],
             ['name' => 'Siswa Edit', 'group' => 'Siswa'],
             ['name' => 'Siswa Delete', 'group' => 'Siswa'],
 
             // ========== DATA KELAS ==========
-            ['name' => 'Data Kelas Index', 'group' => 'Data Kelas'],
+            ['name' => 'Data Kelas View', 'group' => 'Data Kelas'],
 
             // ========== ORANG TUA ==========
-            ['name' => 'Orang Tua Index', 'group' => 'Orang Tua'],
+            ['name' => 'Orang Tua View', 'group' => 'Orang Tua'],
             ['name' => 'Orang Tua Create', 'group' => 'Orang Tua'],
             ['name' => 'Orang Tua Edit', 'group' => 'Orang Tua'],
             ['name' => 'Orang Tua Delete', 'group' => 'Orang Tua'],
 
             // ========== QURAN ==========
             ['name' => 'Quran Reading', 'group' => 'Quran'],
+
+            // ========== HALAQOH ==========
+            ['name' => 'Data Halaqoh View', 'group' => 'Data Halaqoh'],
+            ['name' => 'Data Halaqoh Create', 'group' => 'Data Halaqoh'],
+            ['name' => 'Data Halaqoh Edit', 'group' => 'Data Halaqoh'],
+            ['name' => 'Data Halaqoh Delete', 'group' => 'Data Halaqoh'],
         ];
 
         // 2. Lakukan Update atau Create

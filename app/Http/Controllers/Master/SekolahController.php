@@ -13,7 +13,7 @@ class SekolahController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:Sekolah Index', only: ['index']),
+            new Middleware('permission:Sekolah View', only: ['index']),
             new Middleware('permission:Sekolah Create', only: ['store']),
             new Middleware('permission:Sekolah Edit', only: ['update']),
             new Middleware('permission:Sekolah Delete', only: ['destroy']),
@@ -95,7 +95,7 @@ class SekolahController extends Controller implements HasMiddleware
         $request->validate([
             'nama_sekolah' => 'required|string',
             'nss' => 'nullable|string',
-            'npsn' => 'nullable|string|unique:sekolah,npsn,'.$id,
+            'npsn' => 'nullable|string|unique:sekolah,npsn,' . $id,
             'alamat_sekolah' => 'nullable|string',
             'kecamatan' => 'nullable|string',
             'kabupaten_kota' => 'nullable|string',

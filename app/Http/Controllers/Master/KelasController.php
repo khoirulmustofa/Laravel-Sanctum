@@ -13,7 +13,7 @@ class KelasController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:Kelas Index', only: ['index']),
+            new Middleware('permission:Kelas View', only: ['index']),
             new Middleware('permission:Kelas Create', only: ['store']),
             new Middleware('permission:Kelas Edit', only: ['update']),
             new Middleware('permission:Kelas Delete', only: ['destroy']),
@@ -85,7 +85,7 @@ class KelasController extends Controller implements HasMiddleware
         $kelas = Kelas::findOrFail($id);
 
         $request->validate([
-            'nama' => 'required|string|unique:kelas,nama,'.$kelas->id,
+            'nama' => 'required|string|unique:kelas,nama,' . $kelas->id,
             'paralel' => 'required|numeric',
             'tipe' => 'required|string',
         ]);

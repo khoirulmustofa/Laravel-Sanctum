@@ -13,7 +13,7 @@ class SemesterController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:Semester Index', only: ['index']),
+            new Middleware('permission:Semester View', only: ['index']),
         ];
     }
     public function index()
